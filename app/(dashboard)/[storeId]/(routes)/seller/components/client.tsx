@@ -8,6 +8,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { ApiList } from "@/components/ui/api-list";
+import { MainNav } from "@/components/main-nav";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 import { ProductColumn, columns } from "./columns";
 import { auth, useAuth } from "@clerk/nextjs";
@@ -26,6 +28,10 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({
     <> 
       <div className="flex items-center justify-between">
         <Heading title={`Products (${data.length})`} description="All products in your store" />
+        <div classNamw="flex gap-2">
+        <THemeToogle />
+          <MainNav />
+        </div>
       </div>
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />

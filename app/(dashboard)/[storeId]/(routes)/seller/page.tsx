@@ -3,6 +3,10 @@ import { format } from "date-fns";
 import prismadb from "@/lib/prismadb";
 import { formatter } from "@/lib/utils";
 
+import { auth } from "@clerk/nextjs";
+
+import Navbar from '@/components/navbar'
+
 import { ProductsClient } from "./components/client";
 import { ProductColumn } from "./components/columns";
 
@@ -28,12 +32,23 @@ const SellerPage = async ({
     createdAt: format(item.createdAt, 'MMMM do, yyyy'),
   }));
 
+    const { userId, user } = auth();
+
+  if (userId == 'user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN') {
+    redirect(`/${params.storeId}/seller`);
+  }
+
   return (
+    <>
+      {userId !== 'user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN' ? (
+      <Navbar />
+      ) : (<></>)}
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <ProductsClient data={formattedProducts} />
       </div>
     </div>
+    </>
   );
 };
 

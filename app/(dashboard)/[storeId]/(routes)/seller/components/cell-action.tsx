@@ -61,7 +61,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   };
   const defaultValues = {
-    price: Number(data.price),
+    price: Number(data.price.replace('RF ','')),
     qty: 1,
   };
 
@@ -76,6 +76,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     let ans = await myAction(params.storeId, data.id,form);
     if (ans == "success") {
       toast.success("Product sold.");
+      setOpen(false)
       router.refresh();
     } else {
       toast.success("something went Wrong");

@@ -47,6 +47,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
+  useEffect(() => {
+    setOpen(false)
+  }, [])
+  
+
   const onConfirm = async () => {
     try {
       setLoading(true);
@@ -61,7 +66,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   };
   const defaultValues = {
-    price: Number(data.price.replace('RF ','')),
+    price: 100000,
     qty: 1,
   };
 

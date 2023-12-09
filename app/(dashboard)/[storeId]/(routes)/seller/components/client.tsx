@@ -29,7 +29,7 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({
       <div className="flex items-center justify-between">
         <Heading title={`Products (${data.length})`} description="All products in your store" />
         <div classNamw="flex gap-2">
-        <THemeToogle />
+        <ThemeToogle />
           <MainNav />
         </div>
       </div>

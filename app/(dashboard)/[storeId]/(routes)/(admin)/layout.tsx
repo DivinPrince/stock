@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs";
 
+import Navbar from '@/components/navbar'
+
 import prismadb from "@/lib/prismadb";
 
 interface DashboardPageProps {
@@ -22,5 +24,8 @@ export default async function SetupLayout({
     redirect(`/${params.storeId}/seller`);
   }
 
-  return <>{children}</>;
+  return (<>
+    <Navbar />
+    {children}
+  </>);
 }

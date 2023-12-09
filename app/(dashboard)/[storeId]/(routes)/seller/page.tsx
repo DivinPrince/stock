@@ -34,10 +34,6 @@ const SellerPage = async ({
 
     const { userId, user } = auth();
 
-  if (userId == 'user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN') {
-    redirect(`/${params.storeId}/seller`);
-  }
-
   return (
     <>
       {userId !== 'user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN' ? (

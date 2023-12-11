@@ -26,14 +26,14 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({
   return (
     <> 
       <div className="flex items-center justify-between">
-        <Heading title={`Products (${data.length})`} description="All products in your store" />
+        <Heading title={`Mothly report`} description="search by index" />
         <div className="ml-auto flex items-center space-x-4">
           <ThemeToggle />
           <UserButton afterSignOutUrl="/" />
         </div>
       </div>
       <Separator />
-      <DataTable searchKey="name" columns={columns} data={data} />
+      <DataTable searchKey="sells" columns={columns} data={data} />
       {/* <Heading title="API" description="API Calls for Products" />
       <Separator />
       <ApiList entityName="products" entityIdName="productId" /> */}

@@ -8,6 +8,7 @@ export type ProductColumn = {
   sells: number;
   stockQuantity: string;
   income: number;
+  expences: number;
 }
 
 export const columns: ColumnDef<ProductColumn>[] = [
@@ -22,5 +23,9 @@ export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "stockQuantity",
     header: "StockQuantity",
+  },
+  {
+    accessorKey: "expences",
+    header: "Expences",
   },
 ];

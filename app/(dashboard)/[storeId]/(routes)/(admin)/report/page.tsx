@@ -20,22 +20,38 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
     },
   });
 
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; 
+
   const sells = await prismadb.sell.findMany({
     include:{
       sellItems: true
-    }
+    },
   });
+  const expences = await prismadb.expence.findMany({
+
+  });
+  let expencecount = 0
+
   let income = 0;
 
   for (const order of sells) {
-    for (const item of order.sellItems) {
-      income += item.price;
+    if (order.createdAt.getMonth()+1 === currentMonth) {
+      for (const item of order.sellItems) {
+        income += item.price;
+      }
+    }
+  }
+  for (const order of expences) {
+    if (order.createdAt.getMonth()+1 === currentMonth) {
+      expencecount += 1
     }
   }
 
   const formattedProducts: ProductColumn[] = products.map((item) => ({
     sells: sells.length,
     income,
+    expences: expencecount,
     stockQuantity: item.stockQuantity.toString(),
   }));
 

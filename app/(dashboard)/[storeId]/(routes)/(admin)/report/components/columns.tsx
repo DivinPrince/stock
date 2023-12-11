@@ -28,4 +28,8 @@ export const columns: ColumnDef<ProductColumn>[] = [
     accessorKey: "expences",
     header: "Expences",
   },
+  {
+    id: "actions",
+    cell: ({ row }) => <CellAction data={row.original} />
+  },
 ];

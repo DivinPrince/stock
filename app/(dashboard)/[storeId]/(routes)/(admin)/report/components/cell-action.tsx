@@ -3,7 +3,7 @@
 import axios from "axios";
 import { ArrowLeft, Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -58,7 +58,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
+          <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/expences`)}>
+            <Copy className="mr-2 h-4 w-4" /> view all expences
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

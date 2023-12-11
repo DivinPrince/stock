@@ -164,7 +164,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                   <FormControl>
                     <Textarea
                       disabled={loading}
-                      placeholder="Color: white"
+                      placeholder="Kurangura"
                       {...field}
                     />
                   </FormControl>

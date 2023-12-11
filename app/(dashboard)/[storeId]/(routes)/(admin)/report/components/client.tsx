@@ -27,10 +27,6 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({
     <> 
       <div className="flex items-center justify-between">
         <Heading title={`Mothly report`} description="search by index" />
-        <div className="ml-auto flex items-center space-x-4">
-          <ThemeToggle />
-          <UserButton afterSignOutUrl="/" />
-        </div>
       </div>
       <Separator />
       <DataTable searchKey="sells" columns={columns} data={data} />

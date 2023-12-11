@@ -71,7 +71,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(`/api/${params.storeId}/expences/${params.productId}`, data);
+        await axios.patch(`/api/${params.storeId}/expences/${params.expenceId}`, data);
       } else {
         await axios.post(`/api/${params.storeId}/expences`, data);
       }

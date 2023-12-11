@@ -59,7 +59,7 @@ model Expence {
   storeId String
   store   Store  @relation("ExpenceToStore", fields: [storeId], references: [id])
   description    String
-  money    String
+  money    Int
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   @@index([storeId])

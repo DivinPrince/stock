@@ -59,7 +59,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/expences`)}>
-            <Copy className="mr-2 h-4 w-4" /> view all expences
+             view all expences
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

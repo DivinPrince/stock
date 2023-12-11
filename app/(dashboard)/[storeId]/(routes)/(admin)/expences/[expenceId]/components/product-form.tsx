@@ -88,10 +88,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/expences/${params.productId}`);
+      await axios.delete(`/api/${params.storeId}/expences/${params.expenceId}`);
       router.refresh();
       router.push(`/${params.storeId}/expences`);
-      toast.success('Product deleted.');
+      toast.success('expe deleted.');
     } catch (error: any) {
       toast.error('Something went wrong.');
     } finally {

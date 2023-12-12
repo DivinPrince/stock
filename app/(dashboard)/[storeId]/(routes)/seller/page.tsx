@@ -28,13 +28,8 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));
 
-  const { userId, user } = auth();
-
   return (
     <>
-      {userId === "user_2YxJdWWmZfzFMbi192obx0KMBbY" &&(
-        <Navbar />
-      )}
       <div className="flex-col">
         <div className="flex-1 space-y-4 p-8 pt-6">
           <ProductsClient data={formattedProducts} />

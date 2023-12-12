@@ -84,7 +84,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               {products.map((product) => (
                 <>
                 <Link href={`/${params.storeId}/products/${product.id}`}>
-                  <div key={product.id} className="text-sm cursor-pointer hover:animate-ping">
+                  <div key={product.id} className="text-sm cursor-pointer">
                     {product.name}
                     <span className="text-muted-foreground">reamining {product.stockQuantity}</span>
                   </div>

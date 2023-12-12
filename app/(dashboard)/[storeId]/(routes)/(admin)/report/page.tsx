@@ -48,12 +48,12 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
     }
   }
 
-  const formattedProducts: ProductColumn[] = products.map((item) => ({
+  const formattedProducts: ProductColumn[] = [{
     sells: sells.length,
     income,
     expences: expencecount,
-    stockQuantity: item.stockQuantity.toString(),
-  }));
+    stockQuantity: products.length.toString(),
+  }];
 
   const { userId, user } = auth();
 

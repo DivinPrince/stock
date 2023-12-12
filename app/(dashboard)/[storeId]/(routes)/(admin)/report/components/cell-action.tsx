@@ -49,20 +49,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/expences`)}>
-             view all expences
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Button className="rounded-full">
+        View All Expences
+      </Button>
     </>
   );
 };

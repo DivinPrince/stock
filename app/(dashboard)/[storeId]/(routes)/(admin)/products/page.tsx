@@ -31,7 +31,7 @@ const ProductsPage = async ({
     id: item.id,
     name: item.name,
     stockQuantity: item.stockQuantity,
-    price: formatter.format(item.price),
+    price: formatter.format(Number(item.price)),
     createdAt: format(item.createdAt, 'MMMM do, yyyy'),
   }));
 

@@ -55,8 +55,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onConfirm={onConfirm}
         loading={loading}
       />
-      <div>
-        <Button className="rounded-full"
+      <div className="">
+        <Button className="rounded-full mr-2"
           onClick={() => router.push(`/${params.storeId}/products/${data.id}`)}
         >
           <Edit className="mr-2 h-4 w-4" /> Update

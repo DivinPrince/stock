@@ -5,45 +5,39 @@ import { formatter } from "@/lib/utils";
 
 import { auth } from "@clerk/nextjs";
 
-import Navbar from '@/components/navbar'
+import Navbar from "@/components/navbar";
 
 import { ProductsClient } from "./components/client";
 import { ProductColumn } from "./components/columns";
 
-const SellerPage = async ({
-  params
-}: {
-  params: { storeId: string }
-}) => {
+const SellerPage = async ({ params }: { params: { storeId: string } }) => {
   const products = await prismadb.product.findMany({
     where: {
-      storeId: params.storeId
+      storeId: params.storeId,
     },
     orderBy: {
-      createdAt: 'desc'
-    }
+      createdAt: "desc",
+    },
   });
 
   const formattedProducts: ProductColumn[] = products.map((item) => ({
     id: item.id,
     name: item.name,
     stockQuantity: item.stockQuantity,
-    price: formatter.format(item.price),
-    createdAt: format(item.createdAt, 'MMMM do, yyyy'),
+    price: formatter.format(Number(item.price)),
+    createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));
 
-    const { userId, user } = auth();
+  const { userId, user } = auth();
 
   return (
     <>
-      {userId !== 'user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN' ? (
-      <Navbar />
-      ) : (<></>)}
-    <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
-        <ProductsClient data={formattedProducts} />
+      {userId !== "user_2YxJdWWmZfzFMbi192obx0KMBbY" ? <Navbar /> : <></>}
+      <div className="flex-col">
+        <div className="flex-1 space-y-4 p-8 pt-6">
+          <ProductsClient data={formattedProducts} />
+        </div>
       </div>
-    </div>
     </>
   );
 };

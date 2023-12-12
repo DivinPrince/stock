@@ -50,7 +50,7 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
 
   const formattedProducts: ProductColumn[] = [{
     sells: sells.length,
-    income,
+    income: formatter.format(Number(income)),
     expences: expencecount,
     stockQuantity: products.length.toString(),
   }];

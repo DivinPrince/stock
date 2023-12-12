@@ -10,6 +10,7 @@ import { getGraphRevenue } from "@/actions/get-graph-revenue";
 import prismadb from "@/lib/prismadb";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getTodayRevenue } from "@/actions/get-today-revenue";
+import Link from "next/link";
 
 interface DashboardPageProps {
   params: {
@@ -72,7 +73,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               <Package className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{formatter.format(todayRevenue.todayRevenue)}</div>
+              <div className="text-2xl font-bold">{formatter.format(Number(todayRevenue.todayRevenue))}</div>
             </CardContent>
           </Card>
           <ScrollArea className="h-40 w-48 rounded-md border">
@@ -82,11 +83,13 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               </h4>
               {products.map((product) => (
                 <>
-                  <div key={product.id} className="text-sm">
+                <Link href={`/${params.storeId}/products/${product.id}`}>
+                  <div key={product.id} className="text-sm cursor-pointer hover:animate-ping">
                     {product.name}
-                    <p className="text-muted-foreground">reamining {product.stockQuantity}</p>
+                    <span className="text-muted-foreground">reamining {product.stockQuantity}</span>
                   </div>
                   <Separator className="my-2" />
+                </Link>
                 </>
               ))}
             </div>

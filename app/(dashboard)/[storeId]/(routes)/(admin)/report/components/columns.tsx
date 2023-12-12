@@ -7,7 +7,7 @@ import { CellAction } from "./cell-action"
 export type ProductColumn = {
   sells: number;
   stockQuantity: string;
-  income: number;
+  income: string;
   expences: number;
 }
 

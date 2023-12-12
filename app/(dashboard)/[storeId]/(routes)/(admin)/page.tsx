@@ -86,7 +86,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                 <Link href={`/${params.storeId}/products/${product.id}`}>
                   <div key={product.id} className="text-sm cursor-pointer">
                     {product.name}
-                    <span className="text-muted-foreground">reamining {product.stockQuantity}</span>
+                    <p className="text-muted-foreground">reamining {product.stockQuantity}</p>
                   </div>
                   <Separator className="my-2" />
                 </Link>

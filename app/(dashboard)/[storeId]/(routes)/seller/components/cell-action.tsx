@@ -56,6 +56,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     try {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/products/${data.id}`);
+      form.reset()
+      setOpen(false)
       toast.success("Product deleted.");
       router.refresh();
     } catch (error) {
@@ -65,6 +67,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setOpen(false);
     }
   };
+
   const defaultValues = {
     price: 100000,
     qty: 1,

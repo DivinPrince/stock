@@ -32,7 +32,7 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
 
   return (
     <>
-    {userId == "user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN" && (
+    {userId !== "user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN" && (
       <Navbar />
     )}
       <div className="flex-col">

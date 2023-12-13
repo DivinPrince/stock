@@ -11,7 +11,7 @@ import { ApiList } from "@/components/ui/api-list";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 import { ProductColumn, columns } from "./columns";
-import { auth, useAuth, UserButton } from "@clerk/nextjs";
+import { useAuth, UserButton } from "@clerk/nextjs";
 
 interface ProductsClientProps {
   data: ProductColumn[];
@@ -20,8 +20,7 @@ interface ProductsClientProps {
 export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
   const params = useParams();
   const router = useRouter();
-
-  const { userId, user } = auth();
+  const auth = useAuth()
 
   return (
     <>
@@ -30,7 +29,7 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
           title={`Products (${data.length})`}
           description="All products in your store"
         />
-        {userId == "user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN" && (
+        {auth.userId == "user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN" && (
           <div className="ml-auto flex items-center space-x-4">
             <ThemeToggle />
             <UserButton afterSignOutUrl="/" />

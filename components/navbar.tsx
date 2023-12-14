@@ -46,9 +46,8 @@ const Navbar = async () => {
           <Menu />
         </SheetTrigger>
         <SheetContent>
-          <StoreSwitcher items={stores} className="" />
+          <StoreSwitcher items={stores} />
           <MainNav className="mx-6 flex flex-col gap-2" />
-          
         </SheetContent>
       </Sheet>
     </>

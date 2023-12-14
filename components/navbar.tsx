@@ -16,9 +16,6 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { useRoutes } from "@/hooks/use-routes";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 const Navbar = async () => {
   const { userId } = auth();
@@ -32,7 +29,6 @@ const Navbar = async () => {
       userId,
     },
   });
-  const routes = useRoutes();
 
   return (
     <>
@@ -54,26 +50,9 @@ const Navbar = async () => {
             </SheetTrigger>
             <SheetContent side="left">
               <div className="flex flex-col items-start gap-2">
-                <nav className={cn("flex items-center space-x-4 lg:space-x-6")}>
-                  {routes.map((route) => (
-                    <>
-                      <SheetClose>
-                        <Link
-                          key={route.href}
-                          href={route.href}
-                          className={cn(
-                            "text-sm font-medium transition-colors hover:text-primary",
-                            route.active
-                              ? "text-black dark:text-white"
-                              : "text-muted-foreground"
-                          )}
-                        >
-                          {route.label}
-                        </Link>
-                      </SheetClose>
-                    </>
-                  ))}
-                </nav>
+                <SheetClose>
+                  <MainNav className="flex flex-col gap-2 space-x-0 lg:space-x-0 items-start" />
+                </SheetClose>
               </div>
             </SheetContent>
           </Sheet>

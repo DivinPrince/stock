@@ -59,10 +59,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <Button className="rounded-full mr-2"
           onClick={() => router.push(`/${params.storeId}/products/${data.id}`)}
         >
-          <Edit className="mr-2 h-4 w-4" /> Update
+          <Edit className="mr-2 h-4 w-4" /> <span className="hidden md:flex">Update</span>
         </Button>
         <Button className="rounded-full" variant='destructive' onClick={() => setOpen(true)}>
-          <Trash className="mr-2 h-4 w-4" /> Delete
+          <Trash className="mr-2 h-4 w-4" /> <span className="hidden md:flex">Delete</span>
         </Button>
       </div>
     </>

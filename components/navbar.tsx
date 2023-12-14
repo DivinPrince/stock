@@ -35,12 +35,10 @@ const Navbar = async () => {
         <div className="hidden md:flex">
           <div className="flex h-16 items-center px-4 justify-between w-full">
             <StoreSwitcher items={stores} />
-            <div className="flex gap-2">
-              <MainNav className="mx-6" />
-              <div className="ml-auto flex items-center space-x-4">
-                <ThemeToggle />
-                <UserButton afterSignOutUrl="/" />
-              </div>
+            <MainNav className="mx-6" />
+            <div className="ml-auto flex items-center space-x-4">
+              <ThemeToggle />
+              <UserButton afterSignOutUrl="/" />
             </div>
           </div>
         </div>
@@ -51,7 +49,7 @@ const Navbar = async () => {
             </SheetTrigger>
             <SheetContent side="left">
               <div className="flex flex-col items-start gap-2">
-                <StoreSwitcher items={stores} className="flex items-center"/>
+                <StoreSwitcher items={stores} className="flex items-center" />
                 <MainNav className="flex flex-col gap-2 space-x-0 lg:space-x-0 items-start" />
               </div>
             </SheetContent>

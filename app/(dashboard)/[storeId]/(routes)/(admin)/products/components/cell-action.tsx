@@ -55,14 +55,14 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onConfirm={onConfirm}
         loading={loading}
       />
-      <div className="">
+      <div className="flex gap-2">
         <Button className="rounded-full mr-2"
           onClick={() => router.push(`/${params.storeId}/products/${data.id}`)}
         >
-          <Edit className="mr-2 h-4 w-4" /><span className="hidden md:flex"> Update</span>
+          <Edit className="mr-2 h-4 w-4" /> Update
         </Button>
         <Button className="rounded-full" variant='destructive' onClick={() => setOpen(true)}>
-          <Trash className="mr-2 h-4 w-4" /> <span className="hidden md:flex"> Delete</span>
+          <Trash className="mr-2 h-4 w-4" /> Delete
         </Button>
       </div>
     </>

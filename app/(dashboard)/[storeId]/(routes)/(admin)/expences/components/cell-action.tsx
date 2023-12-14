@@ -52,7 +52,7 @@ export const CellAction: React.FC<CellActionProps> = ({
         onConfirm={onConfirm}
         loading={loading}
       />
-      <div className="">
+      <div className="flex gap-2">
         <Button className="rounded-full mr-2"
           onClick={() => router.push(`/${params.storeId}/expences/${data.id}`)}
         >

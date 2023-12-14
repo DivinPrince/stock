@@ -32,6 +32,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import Link from "next/link";
 
 interface CellActionProps {
   data: ProductColumn;
@@ -49,9 +50,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   return (
     <>
+    <Link href={`/${params.storeId}/expences`}>
       <Button className="rounded-full">
         View All Expences
       </Button>
+    </Link>
     </>
   );
 };

@@ -21,7 +21,7 @@ interface DashboardPageProps {
 const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
   const stockCount = await getStockCount(params.storeId);
   const graphRevenue = await getGraphRevenue(params.storeId);
-  const todayRevenue = await getTodayRevenue(params.storeId)
+  const todayRevenue = await getTodayRevenue(params.storeId);
   const products = await prismadb.product.findMany({
     where: {
       storeId: params.storeId,
@@ -34,9 +34,6 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
     },
   });
 
-
-
-
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
@@ -44,15 +41,17 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
         <Separator />
         <div className="flex flex-wrap gap-2">
           <Card className="flex-1">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Products In Stock
-              </CardTitle>
-              <Package className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stockCount}</div>
-            </CardContent>
+            <Link href={`/${params.storeId}/products`}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Products In Stock
+                </CardTitle>
+                <Package className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stockCount}</div>
+              </CardContent>
+            </Link>
           </Card>
           <Card className="flex-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -73,7 +72,9 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               <Package className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{formatter.format(Number(todayRevenue.todayRevenue))}</div>
+              <div className="text-2xl font-bold">
+                {formatter.format(Number(todayRevenue.todayRevenue))}
+              </div>
             </CardContent>
           </Card>
           <ScrollArea className="h-40 w-48 rounded-md border flex-1">
@@ -83,13 +84,15 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               </h4>
               {products.map((product) => (
                 <>
-                <Link href={`/${params.storeId}/products/${product.id}`}>
-                  <div key={product.id} className="text-sm cursor-pointer">
-                    {product.name}
-                    <p className="text-muted-foreground">reamining {product.stockQuantity}</p>
-                  </div>
-                  <Separator className="my-2" />
-                </Link>
+                  <Link href={`/${params.storeId}/products/${product.id}`}>
+                    <div key={product.id} className="text-sm cursor-pointer">
+                      {product.name}
+                      <p className="text-muted-foreground">
+                        reamining {product.stockQuantity}
+                      </p>
+                    </div>
+                    <Separator className="my-2" />
+                  </Link>
                 </>
               ))}
             </div>

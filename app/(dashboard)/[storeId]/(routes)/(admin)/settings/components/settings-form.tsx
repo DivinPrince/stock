@@ -109,7 +109,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Store name" {...field} />
+                    <Input disabled={loading} placeholder="Store name" {...field} className="min-w-fit"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

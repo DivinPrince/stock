@@ -50,14 +50,13 @@ const Navbar = async () => {
             </SheetTrigger>
             <SheetContent side="left">
               <div className="flex flex-col items-start gap-2">
-              <StoreSwitcher items={stores} />
                 <SheetClose>
                   <MainNav className="flex flex-col gap-2 space-x-0 lg:space-x-0 items-start" />
                 </SheetClose>
               </div>
             </SheetContent>
           </Sheet>
-
+          <StoreSwitcher items={stores} />
           <div className="ml-auto flex items-center space-x-4">
             <ThemeToggle />
             <UserButton afterSignOutUrl="/" />

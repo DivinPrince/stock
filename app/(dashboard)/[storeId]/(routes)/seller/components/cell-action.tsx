@@ -87,7 +87,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setOpen(false)
       router.refresh()
     } else {
-      toast.success("something went Wrong");
+      toast.success(`${ans}`);
     }
     setLoading(false);
   };

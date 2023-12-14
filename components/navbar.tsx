@@ -44,15 +44,15 @@ const Navbar = async () => {
             </div>
           </div>
         </div>
-        <div className="flex md:hidden justify-between">
+        <div className="flex md:hidden justify-between items-center text-lg">
           <Sheet key="left">
             <SheetTrigger>
               <Menu />
             </SheetTrigger>
             <SheetContent side="left">
               <div className="flex flex-col items-start gap-2">
-                <StoreSwitcher items={stores} />
-                <MainNav className="mx-6 flex flex-col gap-2" />
+                <StoreSwitcher items={stores} className="flex items-center"/>
+                <MainNav className="flex flex-col gap-2" />
               </div>
             </SheetContent>
           </Sheet>

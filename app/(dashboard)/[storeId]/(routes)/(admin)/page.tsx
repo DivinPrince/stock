@@ -42,8 +42,8 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
       <div className="flex-1 space-y-4 p-8 pt-6">
         <Heading title="Dashboard" description="Overview of your store" />
         <Separator />
-        <div className="grid gap-4 grid-cols-3">
-          <Card>
+        <div className="flex flex-wrap gap-2">
+          <Card className="flex-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Products In Stock
@@ -54,7 +54,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               <div className="text-2xl font-bold">{stockCount}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="flex-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Today&lsquo;s sells
@@ -65,7 +65,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               <div className="text-2xl font-bold">{todayRevenue.sells}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="flex-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Today&lsquo;s income
@@ -76,7 +76,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               <div className="text-2xl font-bold">{formatter.format(Number(todayRevenue.todayRevenue))}</div>
             </CardContent>
           </Card>
-          <ScrollArea className="h-40 w-48 rounded-md border">
+          <ScrollArea className="h-40 w-48 rounded-md border flex-1">
             <div className="p-4">
               <h4 className="mb-4 text-sm font-medium leading-none">
                 About to finish

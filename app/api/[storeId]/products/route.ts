@@ -39,13 +39,15 @@ export async function POST(
       }
     });
 
+    let updatedName = name.toUpperCase()
+
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 405 });
     }
     
     const product = await prismadb.product.create({
       data: {
-        name,
+        name: updatedName,
         description: description,
         price,
         stockQuantity,

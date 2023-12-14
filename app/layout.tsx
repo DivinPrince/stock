@@ -10,8 +10,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Dashboard',
-  description: 'E-Commerce Dashboard',
+  title: 'Compzone Stok',
+  description: 'Shop Management',
 }
 export const viewport = {
   width: 'device-width',

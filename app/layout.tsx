@@ -13,6 +13,13 @@ export const metadata = {
   title: 'Dashboard',
   description: 'E-Commerce Dashboard',
 }
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  // Also supported by less commonly used
+  // interactiveWidget: 'resizes-visual',
+}
 
 export default async function RootLayout({
   children,
@@ -22,7 +29,6 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning={true}>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <body className={inter.className}>
           <ThemeProvider 
             attribute="class" 

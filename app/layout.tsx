@@ -22,6 +22,7 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning={true}>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <body className={inter.className}>
           <ThemeProvider 
             attribute="class" 

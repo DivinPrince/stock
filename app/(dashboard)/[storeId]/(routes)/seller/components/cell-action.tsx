@@ -56,9 +56,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     try {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/products/${data.id}`);
-      form.reset()
+      toast.success("Product deleted.")
       setOpen(false)
-      toast.success("Product deleted.");
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
@@ -73,7 +72,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     qty: 1,
   };
 
-  const form = useForm<FormValues>({
+  const sellForm = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
@@ -84,8 +83,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     let ans = await myAction(params.storeId, data.id,form);
     if (ans == "success") {
       toast.success("Product sold.");
+      sellForm.reset()
       setOpen(false)
-      router.refresh();
+      router.refresh()
     } else {
       toast.success("something went Wrong");
     }
@@ -109,10 +109,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSell)} className="flex flex-col gap-2">
+            <Form {...sellForm}>
+              <form onSubmit={sellForm.handleSubmit(onSell)} className="flex flex-col gap-2">
                 <FormField 
-                  control={form.control}
+                  control={sellForm.control}
                   name="price"
                   render={({ field }) => (
                     <FormItem>
@@ -128,7 +128,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
                   )}
                 />
                 <FormField
-                  control={form.control}
+                  control={sellForm.control}
                   name="qty"
                   render={({ field }) => (
                     <FormItem>

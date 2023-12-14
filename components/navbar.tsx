@@ -50,8 +50,8 @@ const Navbar = async () => {
             </SheetTrigger>
             <SheetContent side="left">
               <div className="flex flex-col items-start gap-2">
-                <SheetClose asChild>
                   <StoreSwitcher items={stores} />
+                <SheetClose asChild>
                   <MainNav className="flex flex-col gap-2 space-x-0 lg:space-x-0 items-start" />
                 </SheetClose>
               </div>

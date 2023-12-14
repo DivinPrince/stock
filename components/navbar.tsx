@@ -33,9 +33,9 @@ const Navbar = async () => {
     <>
       <div className="border-b w-full">
         <div className="hidden md:flex">
-          <div className="flex h-16 items-center px-4 justify-between">
+          <div className="flex h-16 items-center px-4 justify-between w-full">
             <StoreSwitcher items={stores} />
-            <div>
+            <div className="flex gap-2">
               <MainNav className="mx-6" />
               <div className="ml-auto flex items-center space-x-4">
                 <ThemeToggle />

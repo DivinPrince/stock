@@ -13,6 +13,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
+  SheetClose,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
@@ -49,8 +50,10 @@ const Navbar = async () => {
             </SheetTrigger>
             <SheetContent side="left">
               <div className="flex flex-col items-start gap-2">
-                <StoreSwitcher items={stores} />
-                <MainNav className="flex flex-col gap-2 space-x-0 lg:space-x-0 items-start" />
+                <SheetClose asChild>
+                  <StoreSwitcher items={stores} />
+                  <MainNav className="flex flex-col gap-2 space-x-0 lg:space-x-0 items-start" />
+                </SheetClose>
               </div>
             </SheetContent>
           </Sheet>

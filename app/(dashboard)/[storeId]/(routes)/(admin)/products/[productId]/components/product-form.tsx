@@ -10,7 +10,7 @@ import { Trash } from "lucide-react";
 import { Product } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 
-import { Input } from "@/components/ui/input";
+import { Input } from "@/compui/input";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -80,7 +80,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   });
 
   const onSubmit = async (data: ProductFormValues) => {
-    const already = await isAlready(params.storeId,data.name)
+    const already = await prismadb.product.findMany({
+      where: {
+        storeId: params.storeId as string,
+        name: data.name.toUpperCase(),
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
     if (already) {
       toast.error(

@@ -80,15 +80,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   });
 
   const onSubmit = async (data: ProductFormValues) => {
-    const already = await prismadb.product.findMany({
-      where: {
-        storeId: params.storeId as string,
-        name: data.name.toUpperCase(),
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const already = await isAlready(params.storeId,data.name)
 
     if (already) {
       toast.error(

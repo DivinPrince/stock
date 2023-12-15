@@ -9,7 +9,7 @@ export const formatter = (number: number) => {
   const options = {
     style: 'currency',
     currency: 'RWF',
-    useGrouping: true, // set to false to disable grouping
+    useGrouping: false, // set to false to disable grouping
   };
 
   return new Intl.NumberFormat('rw-RW', options).format(number);

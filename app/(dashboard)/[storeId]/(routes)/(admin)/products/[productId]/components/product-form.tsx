@@ -10,7 +10,7 @@ import { Trash } from "lucide-react";
 import { Product } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 
-import { Input } from "@/compui/input";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Form,

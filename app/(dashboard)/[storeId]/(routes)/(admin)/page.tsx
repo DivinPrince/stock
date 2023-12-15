@@ -95,6 +95,11 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                   </Link>
                 </>
               ))}
+              {!products.length ? (
+                <p className="text-muted-foreground">no result</p>
+              ) : (
+                <></>
+              )}
             </div>
           </ScrollArea>
         </div>

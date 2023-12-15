@@ -96,7 +96,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                 </>
               ))}
               {!products.length ? (
-                <p className="text-muted-foreground">no result</p>
+                <p className="text-muted-foreground">No Results</p>
               ) : (
                 <></>
               )}

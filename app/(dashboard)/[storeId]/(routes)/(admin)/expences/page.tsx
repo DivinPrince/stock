@@ -30,7 +30,7 @@ const ProductsPage = async ({
   const formattedexpences: ProductColumn[] = expences.map((item) => ({
     id: item.id,
     description: item.description,
-    money: formatter.format(Number(item.money)),
+    money: formatter(Number(item.money)),
     createdAt: format(item.createdAt, 'MMMM do, yyyy'),
   }));
 

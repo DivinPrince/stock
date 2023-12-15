@@ -5,4 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const formatter = new Intl.NumberFormat('rw-RW',{style: 'currency',currency: 'RWF'})
+export const formatter = (number: number)=>{
+  return new Intl.NumberFormat('rw-RW',{style: 'currency',currency: 'RWF',}).format(number)
+}

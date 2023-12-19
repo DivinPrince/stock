@@ -8,6 +8,7 @@ export type ProductColumn = {
   id: string
   name: string;
   price: string;
+  description: string
   stockQuantity: number;
   createdAt: string;
 }
@@ -16,6 +17,10 @@ export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "name",
     header: "Name",
+  },
+  {
+    accessorKey: "description",
+    header: "Details",
   },
   {
     accessorKey: "stockQuantity",

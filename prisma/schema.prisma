@@ -13,6 +13,7 @@ model Store {
   name      String
   userId    String
   products  Product[] @relation("StoreToProduct")
+  sellerIds String[] 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Sell      Sell[]    @relation("StoreToSell")
@@ -59,6 +60,7 @@ model Expence {
   storeId String
   store   Store  @relation("ExpenceToStore", fields: [storeId], references: [id])
   description    String
+  name  String
   money    Int
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt

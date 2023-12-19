@@ -93,7 +93,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           await axios.patch(
             `/api/${params.storeId}/products/${params.productId}`,
             data
-          );
+          ).catch(error=>{
+            toast.error(error.message)
+          });
         } else {
           await axios.post(`/api/${params.storeId}/products`, data);
         }

@@ -7,6 +7,7 @@ export async function isAlready(storeId: any, name: any,) {
     where: {
       storeId: storeId,
       name: name.toUpperCase(),
+
     },
     orderBy: {
       createdAt: "desc",

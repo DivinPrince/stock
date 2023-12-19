@@ -104,7 +104,21 @@ export async function PATCH(
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 405 });
     }
-
+    let other = await prismadb.product.findFirst({
+      where: {
+        storeId: params.storeId,
+        name: name.toUpperCase(),
+        id: {
+          not: params.productId,
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    if (other) {
+      return new NextResponse("product with same name already exists try a new name or update the existing product", { status: 405 });
+    }
     const product = await prismadb.product.update({
       where: {
         id: params.productId

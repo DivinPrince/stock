@@ -107,7 +107,7 @@ export async function PATCH(
     let other = await prismadb.product.findFirst({
       where: {
         storeId: params.storeId,
-        name: name.toUpperCase(),
+        name: name.toLowerCase(),
         id: {
           not: params.productId,
         },

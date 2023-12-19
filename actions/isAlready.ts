@@ -6,7 +6,7 @@ export async function isAlready(storeId: any, name: any,) {
   let product = await prismadb.product.findFirst({
     where: {
       storeId: storeId,
-      name: name.toUpperCase(),
+      name: name.toLowerCase(),
 
     },
     orderBy: {

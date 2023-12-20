@@ -29,7 +29,9 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
     },
   });
   const expences = await prismadb.expence.findMany({
-
+    where:{
+      storeId: params.storeId
+    }
   });
   let expencecount = 0
 

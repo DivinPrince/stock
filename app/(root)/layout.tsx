@@ -16,15 +16,11 @@ export default async function SetupLayout({
 
   const store = await prismadb.store.findFirst();
 
-
-
   if (store) {
-    if (userId != 'user_2YxJdWWmZfzFMbi192obx0KMBbY' && store.sellerIds.includes(userId)) {
+    if (userId == 'user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN') {
       redirect(`/${store.id}/seller`);
-    }else if (userId == 'user_2YxJdWWmZfzFMbi192obx0KMBbY'){
-      redirect(`/${store.id}`);
     }else{
-      throw new Error('Not allowed on this website?')
+      redirect(`/${store.id}`);
     }
   };
 

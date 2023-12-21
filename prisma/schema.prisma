@@ -26,7 +26,6 @@ model Product {
   store         Store    @relation("StoreToProduct", fields: [storeId], references: [id])
   name          String
   price         Int
-  purchaseCost  Int
   description   String
   stockQuantity Int
   createdAt     DateTime @default(now())

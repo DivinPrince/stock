@@ -37,7 +37,7 @@ export const SellersClient: React.FC<SellersClientProps> = ({ data }) => {
         )}
       </div>
       <Separator />
-      <DataTable searchKey="username" columns={columns} data={data} pageCount={10} pageCount={12} />
+      <DataTable searchKey="username" columns={columns} data={data} pageCount={10} />
     </>
   );
 };

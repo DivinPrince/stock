@@ -7,9 +7,9 @@ import { CellAction } from "./cell-action"
 export type ProductColumn = {
   month: string;
   sells: number;
-  expences: number;
-  income: number;
-  profit: number;
+  expences: string;
+  income: string;
+  profit: string;
 }
 
 export const columns: ColumnDef<ProductColumn>[] = [

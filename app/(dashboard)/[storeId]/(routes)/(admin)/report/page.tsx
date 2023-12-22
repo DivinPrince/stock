@@ -87,9 +87,9 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
   }
   const formattedProducts: ProductColumn[] = months.map((item, index)=>({
     month: item,
-    expences: getexpencesByMonth(index+1),
-    income: getIncomeByMonth(index+1),
-    profit: getIncomeByMonth(index+1)-getexpencesByMonth(index+1),
+    expences: getexpencesByMonth(index+1) == 0 ? 'None' : formatter(getexpencesByMonth(index+1)),
+    income: getIncomeByMonth(index+1) == 0 ? 'None' : formatter(getIncomeByMonth(index+1)),
+    profit: (getIncomeByMonth(index+1)-getexpencesByMonth(index+1)) == 0 ? 'None' : formatter(getIncomeByMonth(index+1)-getexpencesByMonth(index+1)),
     sells: getSellsByMonth(index+1)
   }));
 

@@ -47,7 +47,7 @@ export function DataTable<TData, TValue>({
       columnFilters,
       pagination:{
         pageSize: pageCount,
-        pageIndex: 1
+        pageIndex: 0
       }
     },
   });

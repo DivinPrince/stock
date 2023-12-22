@@ -46,8 +46,8 @@ export function DataTable<TData, TValue>({
     state: {
       columnFilters,
       pagination:{
-        pageSize: 1,
-        pageIndex: pageCount
+        pageSize: pageCount,
+        pageIndex: 1
       }
     },
   });

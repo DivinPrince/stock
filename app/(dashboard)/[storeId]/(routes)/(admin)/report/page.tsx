@@ -35,40 +35,64 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
   });
   let expencecount = 0;
 
-  let income = 0;
-  const reportData = [
-    { month: "Jan", sells: 0 },
-    { month: "Feb", sells: 0 },
-    { month: "Mar", sells: 0 },
-    { month: "Apr", sells: 0 },
-    { month: "May", sells: 0 },
-    { month: "Jun", sells: 0 },
-    { month: "Jul", sells: 0 },
-    { month: "Aug", sells: 0 },
-    { month: "Sep", sells: 0 },
-    { month: "Oct", sells: 0 },
-    { month: "Nov", sells: 0 },
-    { month: "Dec", sells: 0 },
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
-  for (const order of sells) {
-    if (order.createdAt.getMonth() + 1 === currentMonth) {
-      for (const item of order.sellItems) {
-        income += item.price;
+
+  function getexpencesByMonth(month:number) {  
+    let sum = 0
+    for (const expence of expences) {
+      if (expence.createdAt.getMonth() + 1 === month) {
+        sum += expence.money
       }
     }
+    return sum
+  }
+  function getIncomeByMonth(month:number){
+    let income = 0;
+    for (const order of sells) {
+      if (order.createdAt.getMonth() + 1 === month) {
+        for (const item of order.sellItems) {
+          income += item.price;
+        }
+      }
+    }
+    return income
+  }
+  function getSellsByMonth(month:number) {
+    let sellsCount = 0;
+    for (const order of sells) {
+      if (order.createdAt.getMonth() + 1 === month) {
+        sellsCount++
+      }
+    }
+    return sellsCount
+    
   }
   for (const order of expences) {
     if (order.createdAt.getMonth() + 1 === currentMonth) {
       expencecount += 1;
     }
   }
-  let 
   const formattedProducts: ProductColumn[] = months.map((item, index)=>({
     month: item,
-    expences: expences.
+    expences: getexpencesByMonth(index+1),
+    income: getIncomeByMonth(index+1),
+    profit: getIncomeByMonth(index+1)-getexpencesByMonth(index+1),
+    sells: getSellsByMonth(index+1)
   }));
 
-  const { userId, user } = auth();
 
   return (
     <>

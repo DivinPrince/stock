@@ -26,7 +26,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
   searchKey: string;
-  pageCount?: number
+  pageCount: number
 }
 
 export function DataTable<TData, TValue>({
@@ -39,13 +39,16 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
-    pageCount,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters,
+      pagination:{
+        pageSize: 1,
+        pageIndex: pageCount
+      }
     },
   });
 

@@ -1,9 +1,9 @@
 "use client";
 
 import axios from "axios";
-import { ArrowLeft, Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { ArrowLeft, BadgeInfo, Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,18 +43,38 @@ const formSchema = z.object({
 });
 type FormValues = z.infer<typeof formSchema>;
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   const [loading, setLoading] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const params = useParams();
+  if (data.month == months[currentMonth]) {
+    return (
+      <>
+        <Button className="bg-green-100 text-green-500">
+          <BadgeInfo /> current
+        </Button>
+        <div ref={bottomRef} />
+      </>
+    );
+  }
 
-  return (
-    <>
-    <Link href={`/${params.storeId}/expences`}>
-      <Button className="rounded-full">
-        View All Expences
-      </Button>
-    </Link>
-    </>
-  );
+  return <></>;
 };

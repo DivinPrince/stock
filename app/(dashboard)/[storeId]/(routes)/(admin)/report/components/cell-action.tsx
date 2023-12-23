@@ -65,16 +65,19 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const params = useParams();
+  useEffect(()=>{
+    bottomRef.current?.scrollIntoView()
+  },[])
   if (data.month == months[currentMonth]) {
     return (
       <>
-        <Button className="bg-green-100 text-green-500">
-          <BadgeInfo /> current
-        </Button>
+        <div className="bg-green-100 text-green-500 gap-2 p-1">
+          <BadgeInfo /><span>current</span>
+        </div>
         <div ref={bottomRef} />
       </>
     );
-  }
+  }``
 
   return <></>;
 };

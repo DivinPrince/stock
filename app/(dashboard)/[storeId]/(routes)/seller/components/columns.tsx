@@ -10,6 +10,7 @@ export type ProductColumn = {
   price: string;
   stockQuantity: number;
   createdAt: string;
+  priceNum: number;
 }
 
 export const columns: ColumnDef<ProductColumn>[] = [

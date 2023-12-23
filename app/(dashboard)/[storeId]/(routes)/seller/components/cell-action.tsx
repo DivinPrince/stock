@@ -68,7 +68,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   };
 
   const defaultValues = {
-    price: 100000,
+    price: data.priceNum,
     qty: 1,
   };
 

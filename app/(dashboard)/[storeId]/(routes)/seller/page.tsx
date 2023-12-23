@@ -27,6 +27,7 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
     name: item.name,
     stockQuantity: item.stockQuantity,
     price: formatter(Number(item.price)),
+    priceNum: item.price,
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));
 

@@ -1,7 +1,15 @@
 "use client";
 
 import axios from "axios";
-import { ArrowLeft, BadgeInfo, Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
+import {
+  ArrowLeft,
+  BadgeInfo,
+  CircleDot,
+  Copy,
+  Edit,
+  MoreHorizontal,
+  Trash,
+} from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -65,19 +73,21 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const params = useParams();
-  useEffect(()=>{
-    bottomRef.current?.scrollIntoView()
-  },[])
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView();
+  }, []);
   if (data.month == months[currentMonth]) {
     return (
       <>
         <div className="bg-green-100 text-green-500 flex gap-2 w-fit p-1 rounded-full">
-          <BadgeInfo /><span>current</span>
+          <CircleDot size={10} />
+          <span>current</span>
         </div>
         <div ref={bottomRef} />
       </>
     );
-  }``
+  }
+  ``;
 
   return <></>;
 };

@@ -78,7 +78,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   });
 
   const onSell = async (form: FormValues) => {
-
     setLoading(true);
     let ans = await myAction(params.storeId, data.id,form);
     if (ans == "success") {
@@ -100,7 +99,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onConfirm={onConfirm}
         loading={loading}
       />
-      <DropdownMenu>
+      <DropdownMenu open={open}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost">
             <span className="sr-only">Open menu</span>

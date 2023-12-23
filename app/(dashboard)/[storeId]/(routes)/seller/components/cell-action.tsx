@@ -3,7 +3,7 @@
 import axios from "axios";
 import { ArrowLeft, Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -48,16 +48,15 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const params = useParams();
 
   useEffect(() => {
-    setOpen(false)
-  }, [])
-  
+    setOpen(false);
+  }, []);
 
   const onConfirm = async () => {
     try {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/products/${data.id}`);
-      toast.success("Product deleted.")
-      setOpen(false)
+      toast.success("Product deleted.");
+      setOpen(false);
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
@@ -79,12 +78,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onSell = async (form: FormValues) => {
     setLoading(true);
-    let ans = await myAction(params.storeId, data.id,form);
+    let ans = await myAction(params.storeId, data.id, form);
     if (ans == "success") {
       toast.success("Product sold.");
-      sellForm.reset()
-      setOpen(false)
-      router.refresh()
+      sellForm.reset();
+      setOpen(false);
+      router.refresh();
     } else {
       toast.success(`${ans}`);
     }
@@ -99,7 +98,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onConfirm={onConfirm}
         loading={loading}
       />
-      <DropdownMenu open={open}>
+      <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost">
             <span className="sr-only">Open menu</span>
@@ -108,45 +107,50 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <Form {...sellForm}>
-              <form onSubmit={sellForm.handleSubmit(onSell)} className="flex flex-col gap-2">
-                <FormField 
-                  control={sellForm.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          disabled={loading}
-                          placeholder="price"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={sellForm.control}
-                  name="qty"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          disabled={loading}
-                          placeholder="Quantity"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+          <Form {...sellForm}>
+            <form
+              onSubmit={sellForm.handleSubmit(onSell)}
+              className="flex flex-col gap-2"
+            >
+              <FormField
+                control={sellForm.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="price"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={sellForm.control}
+                name="qty"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="Quantity"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <DropdownMenuItem>
                 <Button type="submit" disabled={loading}>
                   sell
                 </Button>
-              </form>
-            </Form>
+              </DropdownMenuItem>
+            </form>
+          </Form>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

@@ -134,7 +134,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                 {graphRevenue.map((g) => (
                   <TableRow key={g.name} className="flex justify-between">
                     <TableCell className="font-medium">{g.name}</TableCell>
-                    <TableCell>{g.total}</TableCell>
+                    <TableCell>{formatter(g.total)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

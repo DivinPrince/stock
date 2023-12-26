@@ -122,7 +122,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
           <CardHeader>
           </CardHeader>
           <CardContent className="pl-2">
-            <Table>
+            <Table className="w-full">
               <TableCaption>Your monthly Overview.</TableCaption>
               <TableHeader>
                 <TableRow className="flex justify-between">

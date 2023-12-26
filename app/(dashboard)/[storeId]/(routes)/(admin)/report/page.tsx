@@ -59,7 +59,7 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
     }
     for (const p of products) {
       if(p.createdAt.getMonth() + 1 === month){
-        sum += p.purchaseCost
+        sum += p.purchaseCost*p.stockQuantity
       }
       
     }

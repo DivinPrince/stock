@@ -1,6 +1,16 @@
 import { CreditCard, DollarSign, Package } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Overview } from "@/components/overview";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
@@ -11,6 +21,7 @@ import prismadb from "@/lib/prismadb";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getTodayRevenue } from "@/actions/get-today-revenue";
 import Link from "next/link";
+import { DataTable } from "@/components/ui/data-table";
 
 interface DashboardPageProps {
   params: {
@@ -21,6 +32,7 @@ interface DashboardPageProps {
 const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
   const stockCount = await getStockCount(params.storeId);
   const graphRevenue = await getGraphRevenue(params.storeId);
+  const totalRevenue = graphRevenue.reduce((total, dataPoint) => total + dataPoint.total, 0);
   const todayRevenue = await getTodayRevenue(params.storeId);
   const products = await prismadb.product.findMany({
     where: {
@@ -103,14 +115,30 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
             </div>
           </ScrollArea>
         </div>
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Monthly Overview</CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <Overview data={graphRevenue} />
-          </CardContent>
-        </Card>
+
+        <Table>
+          <TableCaption>Your monthly Overview.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Month</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {graphRevenue.map((g) => (
+              <TableRow key={g.name}>
+                <TableCell className="font-medium">{g.name}</TableCell>
+                <TableCell>{g.total}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={3}>Total</TableCell>
+              <TableCell className="text-right">{formatter(totalRevenue)}</TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
       </div>
     </div>
   );

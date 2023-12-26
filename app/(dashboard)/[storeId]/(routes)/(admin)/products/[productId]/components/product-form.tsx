@@ -41,6 +41,7 @@ const formSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
   price: z.coerce.number().min(1),
+  purchaseCost: z.coerce.number().min(1),
   stockQuantity: z.coerce.number().min(1),
 });
 
@@ -71,6 +72,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
         name: "",
         description: "",
         price: 0,
+        purchaseCost: 0,
         stockQuantity: 0,
       };
 
@@ -161,6 +163,23 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                     <Input
                       disabled={loading}
                       placeholder="Product name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="purchaseCost"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>PurchaseCost</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      placeholder="Product purchaseCost(ikiranguzo)"
                       {...field}
                     />
                   </FormControl>

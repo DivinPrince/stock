@@ -74,7 +74,7 @@ export async function PATCH(
 
     const body = await req.json();
 
-    const { name, price, stockQuantity,description } = body;
+    const { name, price,purchaseCost,stockQuantity,description } = body;
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -88,6 +88,9 @@ export async function PATCH(
     }
     if (!description) {
       return new NextResponse("description id is required", { status: 400 });
+    }
+    if (!purchaseCost) {
+      return new NextResponse("purchaseCost id is required", { status: 400 });
     }
 
     if (!params.storeId) {

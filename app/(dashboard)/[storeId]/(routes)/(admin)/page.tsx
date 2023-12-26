@@ -119,15 +119,15 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
         <Table>
           <TableCaption>Your monthly Overview.</TableCaption>
           <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Month</TableHead>
+            <TableRow className="flex justify-between">
+              <TableHead>Month</TableHead>
               <TableHead className="text-right">Amount</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {graphRevenue.map((g) => (
-              <TableRow key={g.name}>
-                <TableCell className="font-medium w-[100px]">{g.name}</TableCell>
+              <TableRow key={g.name} className="flex justify-between">
+                <TableCell className="font-medium">{g.name}</TableCell>
                 <TableCell>{g.total}</TableCell>
               </TableRow>
             ))}

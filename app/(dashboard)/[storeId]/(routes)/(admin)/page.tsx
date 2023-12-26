@@ -138,14 +138,10 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                   </TableRow>
                 ))}
               </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TableCell>Total</TableCell>
-                  <TableCell className="text-right">
-                    {formatter(totalRevenue)}
-                  </TableCell>
-                </TableRow>
-              </TableFooter>
+              <div className="p-4 w-full flex justify-between">
+                <TableCell className="font-medium">Total</TableCell>
+                <TableCell>{formatter(totalRevenue)}</TableCell>
+              </div>
             </Table>
           </CardContent>
         </Card>

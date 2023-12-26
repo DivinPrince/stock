@@ -32,7 +32,10 @@ interface DashboardPageProps {
 const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
   const stockCount = await getStockCount(params.storeId);
   const graphRevenue = await getGraphRevenue(params.storeId);
-  const totalRevenue = graphRevenue.reduce((total, dataPoint) => total + dataPoint.total, 0);
+  const totalRevenue = graphRevenue.reduce(
+    (total, dataPoint) => total + dataPoint.total,
+    0
+  );
   const todayRevenue = await getTodayRevenue(params.storeId);
   const products = await prismadb.product.findMany({
     where: {
@@ -115,30 +118,37 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
             </div>
           </ScrollArea>
         </div>
-
-        <Table>
-          <TableCaption>Your monthly Overview.</TableCaption>
-          <TableHeader>
-            <TableRow className="flex justify-between">
-              <TableHead>Month</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {graphRevenue.map((g) => (
-              <TableRow key={g.name} className="flex justify-between">
-                <TableCell className="font-medium">{g.name}</TableCell>
-                <TableCell>{g.total}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="text-right">{formatter(totalRevenue)}</TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
+        <Card className="col-span-4">
+          <CardHeader>
+          </CardHeader>
+          <CardContent className="pl-2">
+            <Table>
+              <TableCaption>Your monthly Overview.</TableCaption>
+              <TableHeader>
+                <TableRow className="flex justify-between">
+                  <TableHead>Month</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {graphRevenue.map((g) => (
+                  <TableRow key={g.name} className="flex justify-between">
+                    <TableCell className="font-medium">{g.name}</TableCell>
+                    <TableCell>{g.total}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TableCell colSpan={3}>Total</TableCell>
+                  <TableCell className="text-right">
+                    {formatter(totalRevenue)}
+                  </TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

@@ -127,7 +127,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
           <TableBody>
             {graphRevenue.map((g) => (
               <TableRow key={g.name}>
-                <TableCell className="font-medium">{g.name}</TableCell>
+                <TableCell className="font-medium w-[100px]">{g.name}</TableCell>
                 <TableCell>{g.total}</TableCell>
               </TableRow>
             ))}

@@ -138,7 +138,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                   </TableRow>
                 ))}
               </TableBody>
-              <div className="p-4 w-full flex justify-between">
+              <div className="w-full flex justify-between">
                 <TableCell className="font-medium">Total</TableCell>
                 <TableCell>{formatter(totalRevenue)}</TableCell>
               </div>

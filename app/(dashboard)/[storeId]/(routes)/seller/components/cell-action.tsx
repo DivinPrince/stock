@@ -94,7 +94,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <span className="sr-only">Open menu</span>
         Proceed
       </Button>
-      <DropdownMenu open={sellerM.isOpen} onOpenChange={sellerM.onClose}>
+      <DropdownMenu open={sellerM.isOpen} onOpenChange={sellerM.isOpen ? sellerM.onClose : sellerM.onOpen}>
         <DropdownMenuTrigger asChild></DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>

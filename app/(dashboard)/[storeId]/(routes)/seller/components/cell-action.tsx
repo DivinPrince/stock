@@ -134,7 +134,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
                   </FormItem>
                 )}
               />
-              <DropdownMenuItem asChild className="bg-transparent hover:bg-transparent">
+              <DropdownMenuItem asChild>
                 <Button type="submit" disabled={loading}>
                   sell
                 </Button>

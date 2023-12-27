@@ -98,7 +98,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         Proceed
       </Button>
       {isOpen ? (
-        <div className="absolute animate-in slide-in-from-top-5 fade-in-20 inset-0">
+        <div className="">
           <div>
             <Form {...sellForm}>
               <form

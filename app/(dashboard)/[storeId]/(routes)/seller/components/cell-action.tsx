@@ -76,7 +76,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     setLoading(true);
     let ans = await myAction(params.storeId, data.id, form);
     if (ans == "success") {
-      toggleOpen()
       toast.success("Product sold.");
       sellForm.reset();
 
@@ -87,66 +86,63 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     setLoading(false);
   };
 
-  const [isOpen, setOpen] = useState<boolean>(false);
-
-  const toggleOpen = () => setOpen((prev) => !prev);
-
   return (
     <>
-      <Button variant="ghost" className="relative" onClick={toggleOpen}>
-        <span className="sr-only">Open menu</span>
-        Proceed
-      </Button>
-      {isOpen ? (
-        <div className="">
-          <div>
-            <Form {...sellForm}>
-              <form
-                onSubmit={sellForm.handleSubmit(onSell)}
-                className="flex flex-col gap-2"
-              >
-                <FormField
-                  control={sellForm.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          disabled={loading}
-                          placeholder="price"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={sellForm.control}
-                  name="qty"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          disabled={loading}
-                          placeholder="Quantity"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost">
+            <span className="sr-only">Open menu</span>
+            Proceed
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <Form {...sellForm}>
+            <form
+              onSubmit={sellForm.handleSubmit(onSell)}
+              className="flex flex-col gap-2"
+            >
+              <FormField
+                control={sellForm.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="price"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={sellForm.control}
+                name="qty"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="Quantity"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <DropdownMenuItem asChild className="bg-transparent hover:bg-transparent">
                 <Button type="submit" disabled={loading}>
                   sell
                 </Button>
-              </form>
-            </Form>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
+              </DropdownMenuItem>
+            </form>
+          </Form>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </>
   );
 };

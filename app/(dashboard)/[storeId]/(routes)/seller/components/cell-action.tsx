@@ -32,7 +32,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useSellerModal } from "../../../../../../hooks/use-category-modal";
 
 interface CellActionProps {
   data: ProductColumn;
@@ -44,7 +43,6 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
-  let sellerM = useSellerModal();
   const router = useRouter();
   const params = useParams();
 
@@ -78,6 +76,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     setLoading(true);
     let ans = await myAction(params.storeId, data.id, form);
     if (ans == "success") {
+      toggleOpen()
       toast.success("Product sold.");
       sellForm.reset();
 
@@ -139,7 +138,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" disabled={loading} onClick={toggleOpen}>
+                <Button type="submit" disabled={loading}>
                   sell
                 </Button>
               </form>

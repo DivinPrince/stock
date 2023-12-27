@@ -48,11 +48,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {}, []);
 
   const onConfirm = async () => {
@@ -84,8 +80,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     let ans = await myAction(params.storeId, data.id, form);
     if (ans == "success") {
       toast.success("Product sold.");
+      setIsOpen(false)
       sellForm.reset();
-
       router.refresh();
     } else {
       toast.success(`${ans}`);
@@ -95,11 +91,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   return (
     <>
-      <Button variant="ghost" onClick={sellerM.onOpen}>
+      <Button variant="ghost" onClick={()=> setIsOpen(true)}>
         <span className="sr-only">Open menu</span>
         Proceed
       </Button>
-      <DropdownMenu open={sellerM.isOpen} onOpenChange={sellerM.isOpen ? sellerM.onClose : sellerM.onOpen}>
+      <DropdownMenu open={isOpen} onOpenChange={()=>setIsOpen(false)}>
         <DropdownMenuTrigger asChild></DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>

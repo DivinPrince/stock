@@ -93,14 +93,13 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   return (
     <>
-      <Button variant="ghost" onClick={toggleOpen}>
+      <Button variant="ghost" className="relative" onClick={toggleOpen}>
         <span className="sr-only">Open menu</span>
         Proceed
       </Button>
       {isOpen ? (
-        <DropdownMenu defaultOpen>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <div className="absolute animate-in slide-in-from-top-5 fade-in-20 inset-0">
+          <div>
             <Form {...sellForm}>
               <form
                 onSubmit={sellForm.handleSubmit(onSell)}
@@ -143,8 +142,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
                 </Button>
               </form>
             </Form>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </div>
+        </div>
       ) : (
         <></>
       )}

@@ -90,12 +90,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   return (
     <>
       <DropdownMenu open={sellerM.isOpen} onOpenChange={sellerM.onClose}>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost">
+          <Button variant="ghost" onClick={sellerM.onOpen}>
             <span className="sr-only">Open menu</span>
             Proceed
           </Button>
-        </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <Form {...sellForm}>

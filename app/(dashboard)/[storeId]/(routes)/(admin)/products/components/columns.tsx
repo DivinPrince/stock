@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { CellAction } from "./cell-action"
+import Sold from "./sold"
 
 export type ProductColumn = {
   id: string
@@ -44,7 +45,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
     id: "sold",
     accessorKey: "sold",
     header: "Sold",
-    cell: ({ row }) => <CellAction data={row.original} />
+    cell: ({ row }) => <Sold data={row.original} />
   },
   {
     id: "actions",

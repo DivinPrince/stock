@@ -13,7 +13,7 @@ model Store {
   name      String
   userId    String
   products  Product[] @relation("StoreToProduct")
-  sellerIds String[] 
+  sellerIds String[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Sell      Sell[]    @relation("StoreToSell")
@@ -26,7 +26,8 @@ model Product {
   store         Store    @relation("StoreToProduct", fields: [storeId], references: [id])
   name          String
   price         Int
-  purchaseCost Int
+  sold          Int @default(0)
+  purchaseCost  Int
   description   String
   stockQuantity Int
   createdAt     DateTime @default(now())
@@ -57,13 +58,14 @@ model SellItem {
 }
 
 model Expence {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  storeId String
-  store   Store  @relation("ExpenceToStore", fields: [storeId], references: [id])
-  description    String
-  name  String
-  money    Int
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  storeId     String
+  store       Store    @relation("ExpenceToStore", fields: [storeId], references: [id])
+  description String
+  name        String
+  money       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
   @@index([storeId])
 }

@@ -32,6 +32,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { useSellerModal } from "../../../../../../hooks/use-category-modal";
 
 interface CellActionProps {
   data: ProductColumn;
@@ -43,13 +44,9 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  let sellerM = useSellerModal()
   const router = useRouter();
   const params = useParams();
-
-  useEffect(() => {
-    setOpen(false)
-  }, [])
   
 
   const onConfirm = async () => {
@@ -57,13 +54,13 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/products/${data.id}`);
       toast.success("Product deleted.")
-      setOpen(false)
+      sellerM.onClose()
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
-      setOpen(false);
+      sellerM.onClose()
     }
   };
 
@@ -83,7 +80,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     if (ans == "success") {
       toast.success("Product sold.");
       sellForm.reset()
-      setOpen(false)
       router.refresh()
     } else {
       toast.success(`${ans}`);
@@ -93,13 +89,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   return (
     <>
-      <AlertModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onConfirm={onConfirm}
-        loading={loading}
-      />
-      <DropdownMenu>
+      <DropdownMenu open={sellerM.isOpen} onOpenChange={sellerM.onClose}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost">
             <span className="sr-only">Open menu</span>

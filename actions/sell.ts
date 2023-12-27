@@ -28,8 +28,10 @@ export async function myAction(storeId: any, id: any, form: any) {
           id,
         },
         data: {
-          stockQuantity: Oproduct?.stockQuantity - form.qty,
+          stockQuantity: Oproduct?.stockQuantity,
+          sold: Oproduct?.sold + form.qty
         },
+
       });
       return "success";
     }else{

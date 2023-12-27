@@ -9,6 +9,7 @@ export type ProductColumn = {
   name: string;
   purchaseCost: string;
   price: string;
+  sold: number;
   description: string
   stockQuantity: number;
   createdAt: string;
@@ -38,6 +39,12 @@ export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",
+  },
+  {
+    id: "sold",
+    accessorKey: "sold",
+    header: "Sold",
+    cell: ({ row }) => <CellAction data={row.original} />
   },
   {
     id: "actions",

@@ -3,7 +3,7 @@
 import axios from "axios";
 import { ArrowLeft, Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,7 +32,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useSellerModal } from "@/hooks/use-seller-modal";
+import { useSellerModal } from "../../../../../../hooks/use-category-modal";
 
 interface CellActionProps {
   data: ProductColumn;
@@ -44,24 +44,27 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
-  let sellerM = useSellerModal();
+  let sellerM = useSellerModal()
   const router = useRouter();
   const params = useParams();
 
-  const [isOpen, setIsOpen] = useState(false);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    
+  }, [])
+  
 
   const onConfirm = async () => {
     try {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/products/${data.id}`);
-      toast.success("Product deleted.");
-
+      toast.success("Product deleted.")
+      
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
+      ;
     }
   };
 
@@ -77,72 +80,72 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onSell = async (form: FormValues) => {
     setLoading(true);
-    let ans = await myAction(params.storeId, data.id, form);
+    let ans = await myAction(params.storeId, data.id,form);
     if (ans == "success") {
       toast.success("Product sold.");
-      setIsOpen(false)
-      sellForm.reset();
-      router.refresh();
+      sellForm.reset()
+      
+      router.refresh()
     } else {
       toast.success(`${ans}`);
     }
     setLoading(false);
   };
 
+  const [isOpen, setOpen] = useState<boolean>(false)
+
+  const toggleOpen = () => setOpen((prev) => !prev)
+
   return (
     <>
-      <Button variant="ghost" onClick={()=> setIsOpen(true)}>
-        <span className="sr-only">Open menu</span>
-        Proceed
-      </Button>
-      <DropdownMenu open={isOpen} onOpenChange={()=>setIsOpen(false)}>
-        <DropdownMenuTrigger asChild></DropdownMenuTrigger>
+    {isOpen ? (
+      <DropdownMenu defaultOpen>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <Form {...sellForm}>
-            <form
-              onSubmit={sellForm.handleSubmit(onSell)}
-              className="flex flex-col gap-2"
-            >
-              <FormField
-                control={sellForm.control}
-                name="price"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        disabled={loading}
-                        placeholder="price"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={sellForm.control}
-                name="qty"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        disabled={loading}
-                        placeholder="Quantity"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={loading}>
-                sell
-              </Button>
-            </form>
-          </Form>
+            <Form {...sellForm}>
+              <form onSubmit={sellForm.handleSubmit(onSell)} className="flex flex-col gap-2">
+                <FormField 
+                  control={sellForm.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          disabled={loading}
+                          placeholder="price"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={sellForm.control}
+                  name="qty"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          disabled={loading}
+                          placeholder="Quantity"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" disabled={loading}>
+                  sell
+                </Button>
+              </form>
+            </Form>
         </DropdownMenuContent>
       </DropdownMenu>
+    ):(
+      <></>
+    )}
     </>
   );
 };

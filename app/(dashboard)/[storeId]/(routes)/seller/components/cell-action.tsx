@@ -3,7 +3,7 @@
 import axios from "axios";
 import { ArrowLeft, Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,6 +32,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { DropdownMenuItemProps } from "@radix-ui/react-dropdown-menu";
 
 interface CellActionProps {
   data: ProductColumn;
@@ -45,6 +46,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const params = useParams();
+
+  const g = useRef<HTMLDivElement>(null);
 
   useEffect(() => {}, []);
 
@@ -74,8 +77,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onSell = async (form: FormValues) => {
     setLoading(true);
+    let loader = toast.loading("selling");
     let ans = await myAction(params.storeId, data.id, form);
     if (ans == "success") {
+      g?.current?.click();
       toast.success("Product sold.");
       sellForm.reset();
 
@@ -83,6 +88,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     } else {
       toast.success(`${ans}`);
     }
+    toast.dismiss(loader);
     setLoading(false);
   };
 
@@ -134,11 +140,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
                   </FormItem>
                 )}
               />
-              <DropdownMenuItem asChild>
-                <Button type="submit" disabled={loading}>
-                  sell
-                </Button>
+              <DropdownMenuItem className="hidden">
+                <div ref={g}></div>
               </DropdownMenuItem>
+              <Button type="submit" disabled={loading}>
+                sell
+              </Button>
             </form>
           </Form>
         </DropdownMenuContent>

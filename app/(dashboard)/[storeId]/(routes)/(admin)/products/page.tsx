@@ -31,7 +31,7 @@ const ProductsPage = async ({
     id: item.id,
     name: item.name,
     description: item.description,
-    stockQuantity: item.stockQuantity,
+    stockQuantity: item.stockQuantity - item.sold,
     sold: item.sold,
     purchaseCost: formatter(Number(item.price)),
     price: formatter(Number(item.price)),

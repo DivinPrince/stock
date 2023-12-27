@@ -9,7 +9,7 @@ interface props {
   return (
     <div>
         <h1>{data.sold}</h1>
-        <Progress value={(data.sold/data.stockQuantity)*100}/>
+        <Progress value={(data.sold/(data.stockQuantity+data.sold))*100}/>
     </div>
   )
 }

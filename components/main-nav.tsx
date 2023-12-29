@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useRoutes } from "@/hooks/use-routes";
 import { SheetClose } from "./ui/sheet";
 import { FC } from "react";
+import { buttonVariants } from "./ui/button";
 interface MainNavProps {
   className?: string;
   closer?: typeof SheetClose;
@@ -24,10 +25,10 @@ export const MainNav: FC<MainNavProps> = ({ className, closer }) => {
                 key={route.href}
                 href={route.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary",
                   route.active
-                    ? "text-black dark:text-white"
-                    : "text-muted-foreground"
+                    ? buttonVariants({variant: 'secondary'})
+                    : buttonVariants({variant: 'ghost'}),
+                    buttonVariants({variant: 'ghost'})
                 )}
                 >
                 {route.label}

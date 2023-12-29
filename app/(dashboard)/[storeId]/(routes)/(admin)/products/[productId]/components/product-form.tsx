@@ -90,13 +90,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
         await axios.patch(
           `/api/${params.storeId}/products/${params.productId}`,
           data
-          );
-        } else {
+        );
+      } else {
         if (already) {
           toast.error(
             "product with same name already exists try a new name or update the existing product"
           );
-        }else{
+        } else {
           await axios.post(`/api/${params.storeId}/products`, data);
         }
       }

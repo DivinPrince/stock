@@ -45,11 +45,11 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
       sellItems: true,
     },
   });
-  let TS:SellItem[] = []
+  let TS: SellItem[] = [];
   for (const order of paidOrders) {
     if (order.createdAt.toDateString() === new Date().toDateString()) {
       for (const items of order.sellItems) {
-        TS.push(items) 
+        TS.push(items);
       }
     }
   }
@@ -57,15 +57,11 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
   const products = await prismadb.product.findMany({
     where: {
       storeId: params.storeId,
-      stockQuantity: {
-        lt: 5,
-      },
     },
     orderBy: {
       createdAt: "desc",
     },
   });
-
 
   return (
     <div className="flex-col">
@@ -117,15 +113,17 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               </h4>
               {products.map((product) => (
                 <>
-                  <Link href={`/${params.storeId}/products/${product.id}`}>
-                    <div key={product.id} className="text-sm cursor-pointer">
-                      {product.name}
-                      <p className="text-muted-foreground">
-                        reamining {product.stockQuantity}
-                      </p>
-                    </div>
-                    <Separator className="my-2" />
-                  </Link>
+                  {product.stockQuantity - product.sold < 5 && (
+                    <Link href={`/${params.storeId}/products/${product.id}`}>
+                      <div key={product.id} className="text-sm cursor-pointer">
+                        {product.name}
+                        <p className="text-muted-foreground">
+                          reamining {product.stockQuantity - product.sold}
+                        </p>
+                      </div>
+                      <Separator className="my-2" />
+                    </Link>
+                  )}
                 </>
               ))}
               {!products.length ? (
@@ -137,8 +135,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
           </ScrollArea>
         </div>
         <Card className="col-span-4">
-          <CardHeader>
-          </CardHeader>
+          <CardHeader></CardHeader>
           <CardContent className="pl-2">
             <Table className="w-full">
               <TableCaption>Products Sold Today.</TableCaption>
@@ -160,7 +157,9 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               </TableBody>
               <div className="w-full flex justify-between">
                 <TableCell className="font-medium">Total</TableCell>
-                <TableCell>{formatter(Number(todayRevenue.todayRevenue))}</TableCell>
+                <TableCell>
+                  {formatter(Number(todayRevenue.todayRevenue))}
+                </TableCell>
               </div>
             </Table>
           </CardContent>

@@ -55,6 +55,8 @@ model SellItem {
   Qty Int
   sell   Sell   @relation(fields: [sellId], references: [id])
   price  Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   @@index([sellId])
 }

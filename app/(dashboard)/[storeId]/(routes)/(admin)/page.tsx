@@ -22,7 +22,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { getTodayRevenue } from "@/actions/get-today-revenue";
 import Link from "next/link";
 import { DataTable } from "@/components/ui/data-table";
-import { SellItem } from "@prisma/client";
+import { Sell, SellItem } from "@prisma/client";
 
 interface DashboardPageProps {
   params: {
@@ -46,8 +46,10 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
     },
   });
   let TS: SellItem[] = [];
+  let d:Sell[] = []
   for (const order of paidOrders) {
     if (order.createdAt.toDateString() === new Date().toDateString()) {
+      d.push(order)
       for (const items of order.sellItems) {
         TS.push(items);
       }
@@ -144,6 +146,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                   <TableHead>ProductName</TableHead>
                   <TableHead className="text-right">Quantity</TableHead>
                   <TableHead className="text-right">SoldAt</TableHead>
+                  <TableHead className="text-right">Time</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -152,6 +155,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                     <TableCell className="font-medium">{g.name}</TableCell>
                     <TableCell>{g.Qty}</TableCell>
                     <TableCell>{formatter(g.price)}</TableCell>
+                    <TableCell>{g.createdAt.getHours()}:{g.createdAt.getMinutes()}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

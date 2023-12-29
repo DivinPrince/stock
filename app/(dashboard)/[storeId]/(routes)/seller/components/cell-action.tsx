@@ -78,7 +78,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onSell = async (form: FormValues) => {
     setLoading(true);
     let loader = toast.loading("selling");
-    let ans = await myAction(params.storeId, data.id, form);
+    let ans = await myAction(params.storeId, data.id,data.name,form);
     if (ans == "success") {
       g?.current?.click();
       toast.success("Product sold.");

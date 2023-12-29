@@ -22,6 +22,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { getTodayRevenue } from "@/actions/get-today-revenue";
 import Link from "next/link";
 import { DataTable } from "@/components/ui/data-table";
+import { SellItem } from "@prisma/client";
 
 interface DashboardPageProps {
   params: {
@@ -36,6 +37,22 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
     (total, dataPoint) => total + dataPoint.total,
     0
   );
+  const paidOrders = await prismadb.sell.findMany({
+    where: {
+      storeId: params.storeId,
+    },
+    include: {
+      sellItems: true,
+    },
+  });
+  let TS:SellItem[] = []
+  for (const order of paidOrders) {
+    if (order.createdAt.toDateString() === new Date().toDateString()) {
+      for (const items of order.sellItems) {
+        TS.push(items) 
+      }
+    }
+  }
   const todayRevenue = await getTodayRevenue(params.storeId);
   const products = await prismadb.product.findMany({
     where: {
@@ -48,6 +65,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
       createdAt: "desc",
     },
   });
+
 
   return (
     <div className="flex-col">
@@ -123,18 +141,20 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
           </CardHeader>
           <CardContent className="pl-2">
             <Table className="w-full">
-              <TableCaption>Your monthly Overview.</TableCaption>
+              <TableCaption>Products Sold Today.</TableCaption>
               <TableHeader>
                 <TableRow className="flex justify-between">
-                  <TableHead>Month</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead>ProductName</TableHead>
+                  <TableHead className="text-right">SellingPrice</TableHead>
+                  <TableHead className="text-right">Quantity</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {graphRevenue.map((g) => (
+                {TS.map((g) => (
                   <TableRow key={g.name} className="flex justify-between">
                     <TableCell className="font-medium">{g.name}</TableCell>
-                    <TableCell>{formatter(g.total)}</TableCell>
+                    <TableCell>{formatter(g.price)}</TableCell>
+                    <TableCell>{formatter(g.Qty)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

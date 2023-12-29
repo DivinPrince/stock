@@ -2,7 +2,7 @@
 
 import prismadb from "@/lib/prismadb";
 
-export async function myAction(storeId: any, id: any, form: any) {
+export async function myAction(storeId: any, id: any, name: string, form: any) {
   try {
     const Oproduct = await prismadb.product.findUnique({
       where: {
@@ -18,6 +18,8 @@ export async function myAction(storeId: any, id: any, form: any) {
           storeId: storeId,
           sellItems: {
             create: {
+              Qty: form.qty,
+              name: name,
               price: form.price * form.qty,
             },
           },

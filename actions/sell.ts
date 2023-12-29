@@ -30,7 +30,6 @@ export async function myAction(storeId: any, id: any, name: string, form: any) {
           id,
         },
         data: {
-          stockQuantity: Oproduct?.stockQuantity,
           sold: Oproduct?.sold + form.qty
         },
 

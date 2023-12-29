@@ -145,8 +145,8 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                 <TableRow className="flex justify-between">
                   <TableHead>ProductName</TableHead>
                   <TableHead className="text-right">Quantity</TableHead>
-                  <TableHead className="text-right">SoldAt</TableHead>
                   <TableHead className="text-right">Time</TableHead>
+                  <TableHead className="text-right">SoldAt</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

@@ -25,6 +25,7 @@ export const MainNav: FC<MainNavProps> = ({ className, closer }) => {
                 key={route.href}
                 href={route.href}
                 className={cn(
+                  "w-full",
                   route.active
                     ? buttonVariants({variant: 'secondary'})
                     : buttonVariants({variant: 'ghost'}),

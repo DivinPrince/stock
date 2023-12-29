@@ -154,7 +154,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                   <TableRow key={g.name} className="flex justify-between">
                     <TableCell className="font-medium">{g.name}</TableCell>
                     <TableCell>{formatter(g.price)}</TableCell>
-                    <TableCell>{formatter(g.Qty)}</TableCell>
+                    <TableCell>{g.Qty}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

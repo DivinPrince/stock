@@ -22,6 +22,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { getTodayRevenue } from "@/actions/get-today-revenue";
 import Link from "next/link";
 import { DataTable } from "@/components/ui/data-table";
+import { format } from 'date-fns';
 import { Sell, SellItem } from "@prisma/client";
 
 interface DashboardPageProps {
@@ -152,7 +153,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               <TableBody>
                 {TS.map((g) => (
                   <TableRow key={g.name} className="flex justify-between">
-                    <TableCell>{g.createdAt.getHours()}:{g.createdAt.getMinutes()}</TableCell>
+                    <TableCell>format(g.createdAt, 'HH:mm')</TableCell>
                     <TableCell className="font-medium">{g.name}</TableCell>
                     <TableCell>{g.Qty}</TableCell>
                     <TableCell>{formatter(g.price)}</TableCell>

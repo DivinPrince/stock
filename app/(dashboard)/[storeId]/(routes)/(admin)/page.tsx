@@ -153,7 +153,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               <TableBody>
                 {TS.map((g) => (
                   <TableRow key={g.name} className="flex justify-between">
-                    <TableCell>format(g.createdAt, 'HH:mm')</TableCell>
+                    <TableCell>{format(g.createdAt, 'HH:mm')}</TableCell>
                     <TableCell className="font-medium">{g.name}</TableCell>
                     <TableCell>{g.Qty}</TableCell>
                     <TableCell>{formatter(g.price)}</TableCell>

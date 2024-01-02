@@ -21,7 +21,8 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
   });
 
   const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1; 
+  const currentMonth = currentDate.getMonth() + 1;
+  const currentYear = currentDate.getFullYear()
 
   const sells = await prismadb.sell.findMany({
     include: {
@@ -33,20 +34,62 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
       storeId: params.storeId,
     },
   });
-  let expencecount = 0
+  let expencecount = 0;
 
-  let income = 0;
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
-  for (const order of sells) {
-    if (order.createdAt.getMonth()+1 === currentMonth) {
-      for (const item of order.sellItems) {
-        income += item.price;
+  function getexpencesByMonth(month:number) {  
+    let sum = 0
+    for (const expence of expences) {
+      if (expence.createdAt.getMonth() + 1 === month && expence.createdAt.getFullYear() === currentYear) {
+        sum += expence.money
       }
     }
+    for (const p of products) {
+      if(p.createdAt.getMonth() + 1 === month && p.createdAt.getFullYear() === currentYear){
+        sum += p.purchaseCost*p.stockQuantity
+      }
+      
+    }
+    return sum
+  }
+  function getIncomeByMonth(month:number){
+    let income = 0;
+    for (const order of sells) {
+      if (order.createdAt.getMonth() + 1 === month && order.createdAt.getFullYear() === currentYear) {
+        for (const item of order.sellItems) {
+          income += item.price;
+        }
+      }
+    }
+    return income
+  }
+  function getSellsByMonth(month:number) {
+    let sellsCount = 0;
+    for (const order of sells) {
+      if (order.createdAt.getMonth() + 1 === month && order.createdAt.getFullYear() === currentYear) {
+        sellsCount++
+      }
+    }
+    return sellsCount
+    
   }
   for (const order of expences) {
-    if (order.createdAt.getMonth()+1 === currentMonth) {
-      expencecount += 1
+    if (order.createdAt.getMonth() + 1 === currentMonth && order.createdAt.getFullYear() === currentYear) {
+      expencecount += 1;
     }
   }
   const formattedProducts: ProductColumn[] = months.map((item, index)=>({

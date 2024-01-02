@@ -82,16 +82,16 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   });
 
   const onSubmit = async (data: ProductFormValues) => {
-    const already = await isAlready(params.storeId, data.name);
-
-    if (already) {
-      toast.error(
-        "product with same name already exists try a new name or update the existing product"
-      );
-      return;
-    }
     try {
       setLoading(true);
+      const already = await isAlready(params.storeId, data.name);
+
+      if (already) {
+        toast.error(
+          "product with same name already exists try a new name or update the existing product"
+        );
+        return;
+      }
       if (initialData) {
         await axios.patch(
           `/api/${params.storeId}/products/${params.productId}`,

@@ -43,7 +43,7 @@ const Navbar = async () => {
             </div>
           </div>
         </div>
-        <div className="flex md:hidden justify-between items-center text-lg p-2">
+        <div className="flex md:hidden justify-between items-center text-lg p-2 px-8">
           <Sheet key="left">
             <SheetTrigger>
               <Menu />

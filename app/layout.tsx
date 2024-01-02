@@ -5,7 +5,6 @@ import { ModalProvider } from "@/providers/modal-provider";
 import { ToastProvider } from "@/providers/toast-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 
-import NextNProgress from 'nextjs-progressbar';
 
 import "./globals.css";
 
@@ -31,7 +30,6 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning={true}>
         <body className={inter.className}>
-          <NextNProgress color="#16a34a"/>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <ToastProvider />
             <ModalProvider />

@@ -22,6 +22,7 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
 
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1; 
+  const currentYear = currentDate.getFullYear()
 
   const sells = await prismadb.sell.findMany({
     include:{
@@ -36,14 +37,14 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
   let income = 0;
 
   for (const order of sells) {
-    if (order.createdAt.getMonth()+1 === currentMonth) {
+    if (order.createdAt.getMonth()+1 === currentMonth && order.createdAt.getFullYear() === currentYear) {
       for (const item of order.sellItems) {
         income += item.price;
       }
     }
   }
   for (const order of expences) {
-    if (order.createdAt.getMonth()+1 === currentMonth) {
+    if (order.createdAt.getMonth()+1 === currentMonth && order.createdAt.getFullYear() === currentYear) {
       expencecount += 1
     }
   }

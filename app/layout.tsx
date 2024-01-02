@@ -31,7 +31,7 @@ export default async function RootLayout({
       <html lang="en" suppressHydrationWarning={true}>
         <body className={inter.className}>
           <div className="hidden">
-            <NextTopLoader color="#16a34a" />
+            <NextTopLoader color="#16a34a" showSpinner={false} />
           </div>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <ToastProvider />

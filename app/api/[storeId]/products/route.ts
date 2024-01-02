@@ -42,7 +42,7 @@ export async function POST(
       }
     });
 
-    let updatedName = name.toLowerCase()
+    let updatedName = name.toLowerCase().trimEnd()
 
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 405 });

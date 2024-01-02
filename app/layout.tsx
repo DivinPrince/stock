@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ModalProvider } from "@/providers/modal-provider";
 import { ToastProvider } from "@/providers/toast-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
+import NextTopLoader from 'nextjs-toploader';
 
 
 import "./globals.css";
@@ -30,6 +31,7 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning={true}>
         <body className={inter.className}>
+          <NextTopLoader color="#16a34a"/>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <ToastProvider />
             <ModalProvider />

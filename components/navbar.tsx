@@ -36,14 +36,14 @@ const Navbar = async () => {
         <div className="hidden md:flex">
           <div className="flex h-16 items-center px-4 justify-between w-full">
             <StoreSwitcher items={stores} />
-            <MainNav className="mx-6" />
+            <MainNav className="mx-8" />
             <div className="ml-auto flex items-center space-x-4">
               <ThemeToggle />
               <UserButton afterSignOutUrl="/" />
             </div>
           </div>
         </div>
-        <div className="flex md:hidden justify-between items-center text-lg p-2 px-8">
+        <div className="flex md:hidden justify-between items-center text-lg p-2">
           <Sheet key="left">
             <SheetTrigger>
               <Menu />

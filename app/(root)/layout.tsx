@@ -21,7 +21,7 @@ export default async function SetupLayout({
   });
 
   if (store) {
-    if (store.sellerIds.indexOf(userId)) {
+    if (store.sellerIds.includes(userId)) {
       redirect(`/${store.id}/seller`);
     } else if (userId === "user_2YxJdWWmZfzFMbi192obx0KMBbY") {
       redirect(`/${store.id}`);

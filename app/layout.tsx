@@ -11,7 +11,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Compzone Stok",
+  title: "Compzone Stock",
   description: "Shop Management",
 };
 export const viewport = {

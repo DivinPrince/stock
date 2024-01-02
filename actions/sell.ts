@@ -12,7 +12,7 @@ export async function myAction(storeId: any, id: any, name: string, form: any) {
     if (!Oproduct) {
       return "no product found";
     }
-    if (Oproduct.stockQuantity >= form.qty) {
+    if (Oproduct.stockQuantity > 0) {
       await prismadb.sell.create({
         data: {
           storeId: storeId,

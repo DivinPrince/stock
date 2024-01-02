@@ -144,7 +144,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Owner</FormLabel>
+                  <FormLabel>Spender</FormLabel>
                   <FormControl>
                     <Input
                       type="text"

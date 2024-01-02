@@ -106,8 +106,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     } catch (error: any) {
       toast.error("Something went wrong.");
     } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const onDelete = async () => {

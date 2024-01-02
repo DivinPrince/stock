@@ -33,7 +33,7 @@ const ProductsPage = async ({
     description: item.description,
     stockQuantity: item.stockQuantity - item.sold,
     sold: item.sold,
-    purchaseCost: formatter(Number(item.price)),
+    purchaseCost: formatter(Number(item.purchaseCost)),
     price: formatter(Number(item.price)),
     createdAt: format(item.createdAt, 'MMMM do, yyyy'),
   }));

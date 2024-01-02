@@ -74,7 +74,7 @@ export async function PATCH(
 
     const body = await req.json();
 
-    const { name, price, stockQuantity,description } = body;
+    const { money,description,name } = body;
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -82,9 +82,6 @@ export async function PATCH(
 
     if (!name) {
       return new NextResponse("Name is required", { status: 400 });
-    }
-    if (!stockQuantity) {
-      return new NextResponse("stockQuantity id is required", { status: 400 });
     }
     if (!description) {
       return new NextResponse("description id is required", { status: 400 });
@@ -105,22 +102,21 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const product = await prismadb.product.update({
+    const expence = await prismadb.expence.update({
       where: {
         id: params.expenceId
       },
       data: {
         name,
-        price,
         description,
-        stockQuantity
+        money
       },
     });
 
   
-    return NextResponse.json(product);
+    return NextResponse.json(expence);
   } catch (error) {
-    console.log('[PRODUCT_PATCH]', error);
+    console.log('[EXPENCE_PATCH]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
 };

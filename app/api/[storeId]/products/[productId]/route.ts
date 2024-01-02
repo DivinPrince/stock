@@ -74,7 +74,7 @@ export async function PATCH(
 
     const body = await req.json();
 
-    const { name, price, stockQuantity,description } = body;
+    const { name, price,purchaseCost,stockQuantity,description } = body;
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -88,6 +88,9 @@ export async function PATCH(
     }
     if (!description) {
       return new NextResponse("description id is required", { status: 400 });
+    }
+    if (!purchaseCost) {
+      return new NextResponse("purchaseCost id is required", { status: 400 });
     }
 
     if (!params.storeId) {
@@ -104,7 +107,21 @@ export async function PATCH(
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 405 });
     }
-
+    let other = await prismadb.product.findFirst({
+      where: {
+        storeId: params.storeId,
+        name: name.toLowerCase(),
+        id: {
+          not: params.productId,
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    if (other) {
+      return new NextResponse("product with same name already exists try a new name or update the existing product", { status: 405 });
+    }
     const product = await prismadb.product.update({
       where: {
         id: params.productId

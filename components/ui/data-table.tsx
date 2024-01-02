@@ -26,12 +26,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
   searchKey: string;
+  pageCount: number
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   searchKey,
+  pageCount
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -43,7 +45,11 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters,
-    }
+      pagination:{
+        pageSize: pageCount,
+        pageIndex: 0
+      }
+    },
   });
 
   return (

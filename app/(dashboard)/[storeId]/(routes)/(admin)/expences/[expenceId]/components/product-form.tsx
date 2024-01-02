@@ -36,6 +36,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
+  name: z.string().min(1),
   description: z.string().min(1),
   money: z.coerce.number().min(1),
 });
@@ -65,6 +66,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
       }
     : {
         description: "",
+        name: "",
         money: 0,
       };
 
@@ -137,6 +139,24 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           className="space-y-8 w-full"
         >
           <div className="md:grid md:grid-cols-3 gap-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Owner</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      disabled={loading}
+                      placeholder="100"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="money"

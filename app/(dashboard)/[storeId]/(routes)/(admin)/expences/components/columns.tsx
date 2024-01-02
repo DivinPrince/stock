@@ -9,9 +9,14 @@ export type ProductColumn = {
   description: string;
   money: string;
   createdAt: string;
+  name: string
 }
 
 export const columns: ColumnDef<ProductColumn>[] = [
+  {
+    accessorKey: "name",
+    header: "Spender",
+  },
   {
     accessorKey: "description",
     header: "Description",

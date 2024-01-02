@@ -12,13 +12,16 @@ export async function POST(
 
     const body = await req.json();
 
-    const { money,description } = body;
+    const { money,description,name } = body;
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
     if (!money) {
+      return new NextResponse("Money is required", { status: 400 });
+    }
+    if (!name) {
       return new NextResponse("Name is required", { status: 400 });
     }
     if (!description) {
@@ -42,6 +45,7 @@ export async function POST(
 
     const expence = await prismadb.expence.create({
       data: {
+        name,
         money: money,
         description: description,
         storeId: params.storeId,

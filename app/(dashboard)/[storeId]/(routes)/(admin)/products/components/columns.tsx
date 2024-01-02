@@ -3,11 +3,15 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { CellAction } from "./cell-action"
+import Sold from "./sold"
 
 export type ProductColumn = {
   id: string
   name: string;
+  purchaseCost: string;
   price: string;
+  sold: number;
+  description: string
   stockQuantity: number;
   createdAt: string;
 }
@@ -18,8 +22,16 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Name",
   },
   {
+    accessorKey: "description",
+    header: "Details",
+  },
+  {
     accessorKey: "stockQuantity",
     header: "StockQuantity",
+  },
+  {
+    accessorKey: "purchaseCost",
+    header: "PurchestCost(ikiranguzo)",
   },
   {
     accessorKey: "price",
@@ -28,6 +40,12 @@ export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",
+  },
+  {
+    id: "sold",
+    accessorKey: "sold",
+    header: "Sold",
+    cell: ({ row }) => <Sold data={row.original} />
   },
   {
     id: "actions",

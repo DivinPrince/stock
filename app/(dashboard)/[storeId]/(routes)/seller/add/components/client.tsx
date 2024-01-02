@@ -10,14 +10,14 @@ import { Separator } from "@/components/ui/separator";
 import { ApiList } from "@/components/ui/api-list";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-import { ProductColumn, columns } from "./columns";
+import { SellerColumn, columns } from "./columns";
 import { useAuth, UserButton } from "@clerk/nextjs";
 
-interface ProductsClientProps {
-  data: ProductColumn[];
+interface SellersClientProps {
+  data: SellerColumn[];
 }
 
-export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
+export const SellersClient: React.FC<SellersClientProps> = ({ data }) => {
   const params = useParams();
   const router = useRouter();
   const auth = useAuth()
@@ -26,8 +26,8 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`Products (${data.length})`}
-          description="All products in your store"
+          title={`Sellers (${data.length})`}
+          description="available sellers"
         />
         {auth.userId == "user_2ZFkhqgvmyN8kO9H7HyhS8FRYIN" && (
           <div className="ml-auto flex items-center space-x-4">
@@ -37,10 +37,7 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
         )}
       </div>
       <Separator />
-      <DataTable searchKey="name" columns={columns} data={data} pageCount={10} />
-      {/* <Heading title="API" description="API Calls for Products" />
-      <Separator />
-      <ApiList entityName="products" entityIdName="productId" /> */}
+      <DataTable searchKey="username" columns={columns} data={data} pageCount={10} />
     </>
   );
 };

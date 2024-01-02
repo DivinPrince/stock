@@ -22,41 +22,41 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
 
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1; 
-  const currentYear = currentDate.getFullYear()
 
   const sells = await prismadb.sell.findMany({
-    include:{
-      sellItems: true
+    include: {
+      sellItems: true,
     },
   });
   const expences = await prismadb.expence.findMany({
-
+    where: {
+      storeId: params.storeId,
+    },
   });
   let expencecount = 0
 
   let income = 0;
 
   for (const order of sells) {
-    if (order.createdAt.getMonth()+1 === currentMonth && order.createdAt.getFullYear() === currentYear) {
+    if (order.createdAt.getMonth()+1 === currentMonth) {
       for (const item of order.sellItems) {
         income += item.price;
       }
     }
   }
   for (const order of expences) {
-    if (order.createdAt.getMonth()+1 === currentMonth && order.createdAt.getFullYear() === currentYear) {
+    if (order.createdAt.getMonth()+1 === currentMonth) {
       expencecount += 1
     }
   }
+  const formattedProducts: ProductColumn[] = months.map((item, index)=>({
+    month: item,
+    expences: getexpencesByMonth(index+1) == 0 ? 'None' : formatter(getexpencesByMonth(index+1)),
+    income: getIncomeByMonth(index+1) == 0 ? 'None' : formatter(getIncomeByMonth(index+1)),
+    profit: (getIncomeByMonth(index+1)-getexpencesByMonth(index+1)) == 0 ? 'None' : formatter(getIncomeByMonth(index+1)-getexpencesByMonth(index+1)),
+    sells: getSellsByMonth(index+1)
+  }));
 
-  const formattedProducts: ProductColumn[] = [{
-    sells: sells.length,
-    income: formatter(Number(income)),
-    expences: expencecount,
-    stockQuantity: products.length.toString(),
-  }];
-
-  const { userId, user } = auth();
 
   return (
     <>

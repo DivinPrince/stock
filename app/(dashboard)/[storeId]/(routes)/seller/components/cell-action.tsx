@@ -3,7 +3,7 @@
 import axios from "axios";
 import { ArrowLeft, Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect,useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,6 +32,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { DropdownMenuItemProps } from "@radix-ui/react-dropdown-menu";
 
 interface CellActionProps {
   data: ProductColumn;
@@ -43,32 +44,29 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const router = useRouter();
   const params = useParams();
 
-  useEffect(() => {
-    setOpen(false)
-  }, [])
-  
+  const g = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {}, []);
 
   const onConfirm = async () => {
     try {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/products/${data.id}`);
-      toast.success("Product deleted.")
-      setOpen(false)
+      toast.success("Product deleted.");
+
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
-      setOpen(false);
     }
   };
 
   const defaultValues = {
-    price: 100000,
+    price: data.priceNum,
     qty: 1,
   };
 
@@ -78,28 +76,24 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   });
 
   const onSell = async (form: FormValues) => {
-
     setLoading(true);
-    let ans = await myAction(params.storeId, data.id,form);
+    let loader = toast.loading("selling");
+    let ans = await myAction(params.storeId, data.id,data.name,form);
     if (ans == "success") {
+      g?.current?.click();
       toast.success("Product sold.");
-      sellForm.reset()
-      setOpen(false)
-      router.refresh()
+      sellForm.reset();
+
+      router.refresh();
     } else {
       toast.success(`${ans}`);
     }
+    toast.dismiss(loader);
     setLoading(false);
   };
 
   return (
     <>
-      <AlertModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onConfirm={onConfirm}
-        loading={loading}
-      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost">
@@ -109,45 +103,51 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <Form {...sellForm}>
-              <form onSubmit={sellForm.handleSubmit(onSell)} className="flex flex-col gap-2">
-                <FormField 
-                  control={sellForm.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          disabled={loading}
-                          placeholder="price"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={sellForm.control}
-                  name="qty"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          disabled={loading}
-                          placeholder="Quantity"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" disabled={loading}>
-                  sell
-                </Button>
-              </form>
-            </Form>
+          <Form {...sellForm}>
+            <form
+              onSubmit={sellForm.handleSubmit(onSell)}
+              className="flex flex-col gap-2"
+            >
+              <FormField
+                control={sellForm.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="price"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={sellForm.control}
+                name="qty"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="Quantity"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <DropdownMenuItem className="hidden">
+                <div ref={g}></div>
+              </DropdownMenuItem>
+              <Button type="submit" disabled={loading}>
+                sell
+              </Button>
+            </form>
+          </Form>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

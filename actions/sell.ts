@@ -2,7 +2,7 @@
 
 import prismadb from "@/lib/prismadb";
 
-export async function myAction(storeId: any, id: any, form: any) {
+export async function myAction(storeId: any, id: any, name: string, form: any) {
   try {
     const Oproduct = await prismadb.product.findUnique({
       where: {
@@ -12,12 +12,14 @@ export async function myAction(storeId: any, id: any, form: any) {
     if (!Oproduct) {
       return "no product found";
     }
-    if (Oproduct.stockQuantity > 0) {
+    if (Oproduct.stockQuantity >= form.qty) {
       await prismadb.sell.create({
         data: {
           storeId: storeId,
           sellItems: {
             create: {
+              Qty: form.qty,
+              name: name,
               price: form.price * form.qty,
             },
           },
@@ -28,8 +30,9 @@ export async function myAction(storeId: any, id: any, form: any) {
           id,
         },
         data: {
-          stockQuantity: Oproduct?.stockQuantity - form.qty,
+          sold: Oproduct?.sold + form.qty
         },
+
       });
       return "success";
     }else{

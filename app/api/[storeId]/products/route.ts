@@ -12,7 +12,7 @@ export async function POST(
 
     const body = await req.json();
 
-    const { name, price, stockQuantity,description } = body;
+    const { name, price, stockQuantity,description,purchaseCost } = body;
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -27,6 +27,9 @@ export async function POST(
     if (!description) {
       return new NextResponse("description id is required", { status: 400 });
     }
+    if (!purchaseCost) {
+      return new NextResponse("purchaseCost id is required", { status: 400 });
+    }
 
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
@@ -39,7 +42,7 @@ export async function POST(
       }
     });
 
-    let updatedName = name.toUpperCase()
+    let updatedName = name.toLowerCase()
 
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 405 });
@@ -49,6 +52,7 @@ export async function POST(
       data: {
         name: updatedName,
         description: description,
+        purchaseCost,
         price,
         stockQuantity,
         storeId: params.storeId,

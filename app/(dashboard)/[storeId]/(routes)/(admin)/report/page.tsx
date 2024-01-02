@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+hiimport { format } from "date-fns";
 
 import prismadb from "@/lib/prismadb";
 import { formatter } from "@/lib/utils";
@@ -25,6 +25,9 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
   const currentYear = currentDate.getFullYear()
 
   const sells = await prismadb.sell.findMany({
+    where:{
+      storeId: params.storeId,
+  }
     include: {
       sellItems: true,
     },

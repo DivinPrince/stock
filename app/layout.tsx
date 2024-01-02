@@ -31,7 +31,7 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning={true}>
         <body className={inter.className}>
-          <NextTopLoader  color="#16a34a"/>
+          <NextTopLoader  color="#16a34a" showSpinner={false} speed={200}/>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <ToastProvider />
             <ModalProvider />

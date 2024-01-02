@@ -27,7 +27,7 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
   const sells = await prismadb.sell.findMany({
     where:{
       storeId: params.storeId,
-  }
+  },
     include: {
       sellItems: true,
     },

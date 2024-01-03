@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 interface AlertModalProps {
   isOpen: boolean;
@@ -39,7 +40,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
         <Button disabled={loading} variant="outline" onClick={onClose}>
           Cancel
         </Button>
-        <Button disabled={loading} variant="destructive" onClick={onConfirm}>Continue</Button>
+        <Button disabled={loading} variant="destructive" onClick={onConfirm}>Continue {loading &&<Loader2 className="ml-2 h-4 w-4 animate-spin"/>}</Button>
       </div>
     </Modal>
   );

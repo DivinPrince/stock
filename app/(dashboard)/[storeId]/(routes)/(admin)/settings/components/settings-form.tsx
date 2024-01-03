@@ -117,7 +117,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
             />
           </div>
           <Button disabled={loading} className="ml-auto" type="submit">
-            Save changes {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>}
+            Save changes
           </Button>
         </form>
       </Form> 

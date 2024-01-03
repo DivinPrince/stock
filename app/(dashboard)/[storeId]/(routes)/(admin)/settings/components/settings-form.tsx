@@ -5,7 +5,7 @@ import axios from "axios"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
-import { Trash } from "lucide-react"
+import { Loader2, Trash } from "lucide-react"
 import { Store } from "@prisma/client"
 import { useParams, useRouter } from "next/navigation"
 import { useState } from "react"
@@ -117,10 +117,10 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
             />
           </div>
           <Button disabled={loading} className="ml-auto" type="submit">
-            Save changes
+            Save changes <Loader2 className="mr-2 h-4 w-4"/>
           </Button>
         </form>
-      </Form>
+      </Form> 
       {/* <Separator />
       <ApiAlert 
         title="NEXT_PUBLIC_API_URL" 

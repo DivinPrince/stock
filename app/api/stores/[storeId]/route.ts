@@ -58,13 +58,33 @@ export async function DELETE(
     if (!params.storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
-
+    await prismadb.expence.deleteMany({
+      where: {
+        storeId: params.storeId,
+      }
+    })
+    await prismadb.product.deleteMany({
+      where: {
+        storeId: params.storeId,
+      }
+    })
+    await prismadb.sell.deleteMany({
+      where: {
+        storeId: params.storeId,
+      }
+    })
+    await prismadb.sellItem.deleteMany({
+      where: {
+        storeId: params.storeId,
+      }
+    })
     const store = await prismadb.store.deleteMany({
       where: {
         id: params.storeId,
         userId
       }
     });
+
   
     return NextResponse.json(store);
   } catch (error) {

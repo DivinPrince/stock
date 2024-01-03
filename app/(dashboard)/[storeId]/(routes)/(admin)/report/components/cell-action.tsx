@@ -86,8 +86,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <div ref={bottomRef} />
       </>
     );
-  }
-  ``;
+  };
 
   return <></>;
 };

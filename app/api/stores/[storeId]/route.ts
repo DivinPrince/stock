@@ -73,11 +73,6 @@ export async function DELETE(
         storeId: params.storeId,
       }
     })
-    await prismadb.sellItem.deleteMany({
-      where: {
-        storeId: params.storeId,
-      }
-    })
     const store = await prismadb.store.deleteMany({
       where: {
         id: params.storeId,

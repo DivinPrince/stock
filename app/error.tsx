@@ -2,6 +2,7 @@
  
 import { Button } from '@/components/ui/button'
 import { Heading } from '@/components/ui/heading'
+import { SignOutButton } from '@clerk/nextjs'
 import { useEffect } from 'react'
  
 export default function Error({
@@ -11,6 +12,7 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+
   useEffect(() => {
     // Log the error to an error reporting service
     console.error(error)
@@ -20,6 +22,7 @@ export default function Error({
     <div>
       <h2>Something went wrong!</h2>
       <Heading title='Error' description={error.message}/>
+      <SignOutButton>sign out</SignOutButton>
     </div>
   )
 }

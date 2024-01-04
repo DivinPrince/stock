@@ -84,7 +84,9 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
     let sellsCount = 0;
     for (const order of sells) {
       if (order.createdAt.getMonth() + 1 === month && order.createdAt.getFullYear() === currentYear) {
-        sellsCount++
+        for (const item of order.sellItems) {
+          sellsCount += item.Qty
+        }
       }
     }
     return sellsCount
@@ -110,6 +112,7 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
     month: item,
     expences: getexpencesByMonth(index+1) == 0 ? 'None' : formatter(getexpencesByMonth(index+1)),
     income: getIncomeByMonth(index+1) == 0 ? 'None' : formatter(getIncomeByMonth(index+1)),
+    remaining: (getexpencesByMonth(index+1)-getIncomeByMonth(index+1)) == 0 ? 'None' : formatter(getexpencesByMonth(index+1)-getIncomeByMonth(index+1)),
     profit: getProfit(index+1) == 0 ? 'None' : formatter(getProfit(index+1)),
     sells: getSellsByMonth(index+1)
   }));

@@ -25,10 +25,10 @@ export const getTodayRevenue = async (
     if (order.createdAt.toDateString() === new Date().toDateString()) {
         const month = order.createdAt.getDay(); // 0 for Jan, 1 for Feb, ...
         let revenueForOrder = 0;
-        sells+=1
-    
+        
         for (const item of order.sellItems) {
           revenueForOrder += item.price;
+          sells+=item.Qty
         }
     
         // Adding the revenue for this order to the respective month

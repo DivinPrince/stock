@@ -9,6 +9,7 @@ export type ProductColumn = {
   sells: number;
   expences: string;
   income: string;
+  remaining: string;
   profit: string;
 }
 
@@ -28,6 +29,10 @@ export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "income",
     header: "Income",
+  },
+  {
+    accessorKey: "remaining",
+    header: "Remaining(asigaye)",
   },
   {
     accessorKey: "profit",

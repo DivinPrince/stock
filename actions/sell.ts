@@ -12,7 +12,7 @@ export async function myAction(storeId: any, id: any, name: string, form: any) {
     if (!Oproduct) {
       return "no product found";
     }
-    if (!Oproduct.stockQuantity < form.qty) {
+    if (Oproduct.stockQuantity >= form.qty) {
       let bought = Oproduct.purchaseCost * form.qty;
       let selling = form.price * form.qty;
 
@@ -39,12 +39,10 @@ export async function myAction(storeId: any, id: any, name: string, form: any) {
         },
       });
       return "success";
+    }else{
+      return "product outof stock";
     }
-    return "product outof stock";
   } catch (error) {
-    console.log("====================================");
-    console.log("");
-    console.log("====================================");
     return "something went wrong";
   }
 }

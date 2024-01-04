@@ -14,10 +14,6 @@ export default async function SetupLayout({
     redirect("/sign-in");
   }
 
-  if ( userId !== process.env.ADMIN_ID) {
-    throw new Error("Not allowed on this site");
-  }
-
   const store = await prismadb.store.findFirst({
     where: {
       userId: process.env.ADMIN_ID

@@ -29,7 +29,7 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
           title={`Products (${data.length})`}
           description="All products in your store"
         />
-        {userId != process.env.ADMIN_ID && (
+        {!(userId != process.env.ADMIN_ID) && (
           <div className="ml-auto flex items-center space-x-4">
             <ThemeToggle />
             <UserButton afterSignOutUrl="/" />

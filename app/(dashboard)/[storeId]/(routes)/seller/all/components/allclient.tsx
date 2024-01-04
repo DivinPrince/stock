@@ -6,7 +6,7 @@ import { Heading } from "@/components/ui/heading";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Seller } from "@prisma/client";
 import { Separator } from "@radix-ui/react-dropdown-menu";
-import { formatDistance, subDays } from "date-fns";
+import { format, formatDistance, subDays } from "date-fns";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -31,7 +31,7 @@ export const AllClient: React.FC<All> = ({ data }) => {
     }
     return (
         <>
-            <div className="flex items-center justify-between">
+            <div>
                 <Heading
                     title={`seller (${data.length})`}
                     description="All seller"
@@ -55,7 +55,7 @@ export const AllClient: React.FC<All> = ({ data }) => {
                                     <TableRow key={seller.id} className="flex justify-between">
                                     <TableCell>{seller.name}</TableCell>
                                     <TableCell className="font-medium">{seller.id}</TableCell>
-                                    <TableCell>{formatDistance(subDays(seller.createdAt, 3), new Date(), { addSuffix: true })}</TableCell>
+                                    <TableCell>{format(new Date(seller.createdAt), "MMMM d, yyyy")}</TableCell>
                                     <TableCell><Button onClick={()=>deleteSeller(seller.id)}>Delete</Button></TableCell>
                                   </TableRow>
                                 ))}

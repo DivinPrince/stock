@@ -20,7 +20,7 @@ interface ProductsClientProps {
 export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
   const params = useParams();
   const router = useRouter();
-  const auth = useAuth()
+  const {userId} = useAuth()
 
   return (
     <>
@@ -29,7 +29,7 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
           title={`Products (${data.length})`}
           description="All products in your store"
         />
-        {auth.userId !== process.env.ADMIN_ID && (
+        {userId !== process.env.ADMIN_ID && (
           <div className="ml-auto flex items-center space-x-4">
             <ThemeToggle />
             <UserButton afterSignOutUrl="/" />

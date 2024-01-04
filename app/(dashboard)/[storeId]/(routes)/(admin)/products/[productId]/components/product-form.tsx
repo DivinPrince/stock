@@ -83,14 +83,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
 
   const onSubmit = async (data: ProductFormValues) => {
     setLoading(true);
-    const already = await isAlready(params.storeId, data.name);
-
-    if (already) {
-      toast.error(
-        "product with same name already exists try a new name or update the existing product"
-      );
-      return;
-    }
     try {
       if (initialData) {
         const already = await isAlready(params.storeId, data.name,initialData.id);
@@ -122,6 +114,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     } catch (error: any) {
       toast.error("Something went wrong.");
     } finally {
+      setLoading(false);
     }
     setLoading(false);
   };

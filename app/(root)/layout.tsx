@@ -25,13 +25,12 @@ export default async function SetupLayout({
   });
   
   if (store) {
-    const seller = await prismadb.seller.findFirst({
+    const sellers = await prismadb.seller.findMany({
       where:{
         storeId: store.id,
-        id: userId
       }
     })
-    if (seller) {
+    if (sellers.find((s)=> s.id === userId)) {
       redirect(`/${store.id}/seller`);
     } else if (userId === process.env.ADMIN_ID) {
       redirect(`/${store.id}`);

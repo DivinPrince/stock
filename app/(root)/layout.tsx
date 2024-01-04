@@ -13,7 +13,7 @@ export default async function SetupLayout({
   if (!userId) {
     redirect("/sign-in");
   }
-  
+
   if ( userId !== process.env.ADMIN_ID) {
     throw new Error("Not allowed on this site");
   }
@@ -32,6 +32,7 @@ export default async function SetupLayout({
     } else {
       throw new Error("Not allowed on this site");
     }
+  }else{
+    return <>{children}</>;
   }
-  return <>{children}</>;
 }

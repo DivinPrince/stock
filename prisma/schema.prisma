@@ -13,6 +13,7 @@ model Store {
   name      String
   userId    String
   products  Product[] @relation("StoreToProduct")
+  sellers   Seller[]  @relation("StoreToSeller")
   sellerIds String[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -26,7 +27,7 @@ model Product {
   store         Store    @relation("StoreToProduct", fields: [storeId], references: [id])
   name          String
   price         Int
-  sold          Int @default(0)
+  sold          Int      @default(0)
   purchaseCost  Int
   description   String
   stockQuantity Int
@@ -49,15 +50,15 @@ model Sell {
 
 // Intermediary for a many-to-many relationship
 model SellItem {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  sellId String @db.ObjectId
-  name String
-  Qty Int
-  sell   Sell   @relation(fields: [sellId], references: [id])
-  price  Int
-  profit Int
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  sellId    String   @db.ObjectId
+  name      String
+  Qty       Int
+  sell      Sell     @relation(fields: [sellId], references: [id])
+  price     Int
+  profit    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([sellId])
 }
@@ -71,6 +72,17 @@ model Expence {
   money       Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([storeId])
+}
+
+model Seller {
+  id        String   @id @map("_id")
+  name      String
+  storeId   String
+  store     Store    @relation("StoreToSeller", fields: [storeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([storeId])
 }

@@ -1,9 +1,9 @@
 import Navbar from "@/components/navbar";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
-import { AllClient } from "./allclient";
+import { AllClient } from "./components/allclient";
 
-export const add = async ({ params }: { params: { storeId: string } }) => {
+export const DelPage = async ({ params }: { params: { storeId: string } }) => {
     const { userId } = auth()
     const sellers = await prismadb.seller.findMany({
         where: {

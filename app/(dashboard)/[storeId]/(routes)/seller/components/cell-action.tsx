@@ -96,7 +96,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost">
+          <Button>
             <span className="sr-only">Open menu</span>
             Proceed
           </Button>

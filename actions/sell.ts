@@ -12,37 +12,36 @@ export async function myAction(storeId: any, id: any, name: string, form: any) {
     if (!Oproduct) {
       return "no product found";
     }
-    if (Oproduct.stockQuantity > 0) {
-      let bought = Oproduct.purchaseCost*form.qty
-      let selling = form.price*form.qty
-      
-      let profit = selling - bought
-      await prismadb.sell.create({
-        data: {
-          storeId: storeId,
-          sellItems: {
-            create: {
-              Qty: form.qty,
-              name: name,
-              price: form.price * form.qty,
-              profit
-            },
+    if(Oproduct.stockQuantity <= 0){
+      return "product outof stock";
+    }
+
+    let bought = Oproduct.purchaseCost * form.qty;
+    let selling = form.price * form.qty;
+
+    let profit = selling - bought;
+    await prismadb.sell.create({
+      data: {
+        storeId: storeId,
+        sellItems: {
+          create: {
+            Qty: form.qty,
+            name: name,
+            price: form.price * form.qty,
+            profit,
           },
         },
-      });
-      await prismadb.product.update({
-        where: {
-          id,
-        },
-        data: {
-          sold: Oproduct?.sold + form.qty
-        },
-
-      });
-      return "success";
-    }else{
-      return 'product outof stock'
-    }
+      },
+    });
+    await prismadb.product.update({
+      where: {
+        id,
+      },
+      data: {
+        sold: Oproduct?.sold + form.qty,
+      },
+    });
+    return "success";
   } catch (error) {
     console.log("====================================");
     console.log("");

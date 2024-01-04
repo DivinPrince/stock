@@ -93,11 +93,27 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     }
     try {
       if (initialData) {
+        const already = await isAlready(params.storeId, data.name,initialData.id);
+    
+        if (already) {
+          toast.error(
+            "product with same name already exists try a new name or update the existing product"
+          );
+          return;
+        }
         await axios.patch(
           `/api/${params.storeId}/products/${params.productId}`,
           data
-        );
-      } else {
+          );
+        } else {
+        const already = await isAlready(params.storeId, data.name);
+    
+        if (already) {
+          toast.error(
+            "product with same name already exists try a new name or update the existing product"
+          );
+          return;
+        }
         await axios.post(`/api/${params.storeId}/products`, data);
       }
       router.refresh();

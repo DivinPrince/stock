@@ -3,7 +3,7 @@ import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { AllClient } from "./components/allclient";
 
-export const DelPage = async ({ params }: { params: { storeId: string } }) => {
+const DelPage = async ({ params }: { params: { storeId: string } }) => {
     const { userId } = auth()
     const sellers = await prismadb.seller.findMany({
         where: {
@@ -23,3 +23,5 @@ export const DelPage = async ({ params }: { params: { storeId: string } }) => {
         </>
     );
 }
+
+export default DelPage

@@ -26,6 +26,11 @@ export const useRoutes = ()=>{
         active: pathname === `/${params.storeId}/seller/add`,
       },
       {
+        href: `/${params.storeId}/seller/all`,
+        label: 'sellers',
+        active: pathname === `/${params.storeId}/seller/all`,
+      },
+      {
         href: `/${params.storeId}/expences`,
         label: 'Expences',
         active: pathname === `/${params.storeId}/expences`,

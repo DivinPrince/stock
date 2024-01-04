@@ -1,7 +1,5 @@
 import { auth, clerkClient } from "@clerk/nextjs";
 import React from "react";
-import { SellersClient } from "./components/client";
-import { User } from "@clerk/nextjs/dist/types/server";
 import { redirect } from "next/navigation";
 import { SettingsForm } from "./components/addseler";
 

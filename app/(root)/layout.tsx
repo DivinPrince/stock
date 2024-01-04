@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs";
+import { auth,clerkClient,currentUser } from "@clerk/nextjs";
 
 import prismadb from "@/lib/prismadb";
 
@@ -16,18 +16,21 @@ export default async function SetupLayout({
 
   const store = await prismadb.store.findFirst({
     where: {
-      userId: "user_2YxJdWWmZfzFMbi192obx0KMBbY",
+      userId: process.env.ADMIN_ID
     },
   });
 
   if (store) {
     if (store.sellerIds.includes(userId)) {
       redirect(`/${store.id}/seller`);
-    } else if (userId === "user_2YxJdWWmZfzFMbi192obx0KMBbY") {
+    } else if (userId === process.env.ADMIN_ID) {
       redirect(`/${store.id}`);
     } else {
       throw new Error("Not allowed on this site");
     }
+  }
+  if (!store && userId !== process.env.ADMIN_ID) {
+    throw new Error("Not allowed on this site");
   }
 
   return <>{children}</>;

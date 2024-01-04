@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 const page = async ({ params }: { params: { storeId: string } }) => {
   const { userId, user } = auth();
-  if (userId != "user_2YxJdWWmZfzFMbi192obx0KMBbY") {
+  if (userId != process.env.ADMIN_ID) {
     redirect(`/${params.storeId}/seller`);
   }
   const users = await clerkClient.users.getUserList();

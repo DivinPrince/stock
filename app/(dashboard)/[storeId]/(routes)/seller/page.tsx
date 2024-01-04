@@ -33,7 +33,7 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
 
   return (
     <>
-    {userId === "user_2YxJdWWmZfzFMbi192obx0KMBbY" && (
+    {userId === process.env.ADMIN_ID && (
       <Navbar />
     )}
       <div className="flex-col">

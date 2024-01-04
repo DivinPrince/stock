@@ -13,6 +13,10 @@ export async function myAction(storeId: any, id: any, name: string, form: any) {
       return "no product found";
     }
     if (Oproduct.stockQuantity > 0) {
+      let bought = Oproduct.purchaseCost*form.qty
+      let selling = form.price*form.qty
+      
+      let profit = selling - bought
       await prismadb.sell.create({
         data: {
           storeId: storeId,
@@ -21,6 +25,7 @@ export async function myAction(storeId: any, id: any, name: string, form: any) {
               Qty: form.qty,
               name: name,
               price: form.price * form.qty,
+              profit
             },
           },
         },

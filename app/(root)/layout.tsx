@@ -32,7 +32,7 @@ export default async function SetupLayout({
     } else {
       throw new Error("Not allowed on this site");
     }
-  }else{
-    return <>{children}</>;
   }
+  
+  return <>{children}</>;
 }

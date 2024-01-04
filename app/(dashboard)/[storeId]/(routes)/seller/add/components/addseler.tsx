@@ -55,7 +55,7 @@ export const SettingsForm = () => {
       toast.error('Something went wrong.');
     } finally {
       setLoading(false);
-      form.reset()
+      router.refresh()
     }
   };
 
@@ -111,7 +111,7 @@ export const SettingsForm = () => {
             />
           </div>
           <Button disabled={loading} className="ml-auto" type="submit">
-            Save changes
+            Add
           </Button>
         </form>
       </Form> 

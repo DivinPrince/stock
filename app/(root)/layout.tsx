@@ -9,9 +9,13 @@ export default async function SetupLayout({
   children: React.ReactNode;
 }) {
   const { userId } = auth();
-
+  
   if (!userId) {
     redirect("/sign-in");
+  }
+  
+  if ( userId !== process.env.ADMIN_ID) {
+    throw new Error("Not allowed on this site");
   }
 
   const store = await prismadb.store.findFirst({
@@ -29,9 +33,5 @@ export default async function SetupLayout({
       throw new Error("Not allowed on this site");
     }
   }
-  if (!store && userId !== process.env.ADMIN_ID) {
-    throw new Error("Not allowed on this site");
-  }
-
   return <>{children}</>;
 }

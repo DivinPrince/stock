@@ -21,7 +21,7 @@ export default function Error({
   return (
     <div>
       <h2>Something went wrong!</h2>
-      <Heading title='Error' description={error.message}/>
+      <Heading title='Wait!!' description={"To become a verfied user contact 0783205844"}/>
       <SignOutButton>sign out</SignOutButton>
     </div>
   )

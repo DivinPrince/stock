@@ -16,14 +16,14 @@ export const useRoutes = ()=>{
         active: pathname === `/${params.storeId}/products`,
       },
       {
-        href: `/${params.storeId}/settings`,
-        label: 'Settings',
-        active: pathname === `/${params.storeId}/settings`,
-      },
-      {
         href: `/${params.storeId}/seller`,
         label: 'Seller',
         active: pathname === `/${params.storeId}/seller`,
+      },
+      {
+        href: `/${params.storeId}/seller/add`,
+        label: 'Seller',
+        active: pathname === `/${params.storeId}/seller/add`,
       },
       {
         href: `/${params.storeId}/expences`,
@@ -34,6 +34,11 @@ export const useRoutes = ()=>{
         href: `/${params.storeId}/report`,
         label: 'Report',
         active: pathname === `/${params.storeId}/report`,
+      },
+      {
+        href: `/${params.storeId}/settings`,
+        label: 'Settings',
+        active: pathname === `/${params.storeId}/settings`,
       },
     ]
     return routes

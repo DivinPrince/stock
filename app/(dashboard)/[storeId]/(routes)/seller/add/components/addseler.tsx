@@ -55,6 +55,7 @@ export const SettingsForm = () => {
       toast.error('Something went wrong.');
     } finally {
       setLoading(false);
+      form.reset()
     }
   };
 

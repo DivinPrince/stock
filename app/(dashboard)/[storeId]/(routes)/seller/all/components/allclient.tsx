@@ -7,6 +7,8 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Seller } from "@prisma/client";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { format, formatDistance, subDays } from "date-fns";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -15,6 +17,7 @@ interface All {
 }
 export const AllClient: React.FC<All> = ({ data }) => {
     const [loading, setLoading] = useState(false);
+    const router = useRouter()
     const deleteSeller = async(id: string)=>{
         setLoading(true)
         try {
@@ -27,6 +30,7 @@ export const AllClient: React.FC<All> = ({ data }) => {
             console.log('====================================');
         } finally{
             setLoading(false)
+            router.refresh()
         }
     }
     return (
@@ -41,7 +45,7 @@ export const AllClient: React.FC<All> = ({ data }) => {
                     <CardHeader></CardHeader>
                     <CardContent className="pl-2">
                         <Table className="w-full">
-                            <TableCaption>Products Sold Today.</TableCaption>
+                            <TableCaption>All sellers</TableCaption>
                             <TableHeader>
                                 <TableRow className="flex justify-between">
                                     <TableHead className="text-center">Name</TableHead>
@@ -56,7 +60,7 @@ export const AllClient: React.FC<All> = ({ data }) => {
                                     <TableCell>{seller.name}</TableCell>
                                     <TableCell className="font-medium">{seller.id}</TableCell>
                                     <TableCell>{format(new Date(seller.createdAt), "MMMM d, yyyy")}</TableCell>
-                                    <TableCell><Button onClick={()=>deleteSeller(seller.id)}>Delete</Button></TableCell>
+                                    <TableCell><Button disabled={loading} onClick={()=>deleteSeller(seller.id)}>Delete {loading &&<Loader2 className="ml-2 h-4 w-4 animate-spin"/>}</Button></TableCell>
                                   </TableRow>
                                 ))}
                             </TableBody>

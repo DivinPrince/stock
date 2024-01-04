@@ -22,7 +22,7 @@ export const useRoutes = ()=>{
       },
       {
         href: `/${params.storeId}/seller/add`,
-        label: 'Seller Add',
+        label: 'Add Seller',
         active: pathname === `/${params.storeId}/seller/add`,
       },
       {

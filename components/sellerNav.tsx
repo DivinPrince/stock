@@ -26,7 +26,7 @@ const SellerNav = async () => {
 
   const stores = await prismadb.store.findMany({
     where: {
-      userId,
+      userId: process.env.ADMIN_ID,
     },
   });
 

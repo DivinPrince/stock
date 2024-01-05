@@ -77,7 +77,8 @@ model Expence {
 }
 
 model Seller {
-  id        String   @id @map("_id")
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
   name      String
   storeId   String
   store     Store    @relation("StoreToSeller", fields: [storeId], references: [id])

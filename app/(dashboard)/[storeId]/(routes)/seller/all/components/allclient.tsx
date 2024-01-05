@@ -58,7 +58,7 @@ export const AllClient: React.FC<All> = ({ data }) => {
                                 {data.map((seller)=>(
                                     <TableRow key={seller.id} className="flex justify-between">
                                     <TableCell>{seller.name}</TableCell>
-                                    <TableCell className="font-medium">{seller.id}</TableCell>
+                                    <TableCell className="font-medium">{seller.userId}</TableCell>
                                     <TableCell>{format(new Date(seller.createdAt), "MMMM d, yyyy")}</TableCell>
                                     <TableCell><Button disabled={loading} onClick={()=>deleteSeller(seller.id)}>Delete {loading &&<Loader2 className="ml-2 h-4 w-4 animate-spin"/>}</Button></TableCell>
                                   </TableRow>

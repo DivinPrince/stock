@@ -10,7 +10,7 @@ export async function addSeller(storeId: any, id: any,name: any) {
     const seller = await prismadb.seller.create({
       data: {
         storeId,
-        id,
+        userId: id,
         name,
       }
     });

@@ -26,7 +26,7 @@ export default async function SetupLayout({
         storeId: store.id,
       }
     })
-    if (sellers.find((s)=> s.id === userId)) {
+    if (sellers.find((s)=> s.userId === userId)) {
       redirect(`/${store.id}/seller`);
     } else if (userId === process.env.ADMIN_ID) {
       redirect(`/${store.id}`);

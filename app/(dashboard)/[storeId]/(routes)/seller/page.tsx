@@ -9,6 +9,7 @@ import Navbar from "@/components/navbar";
 
 import { ProductsClient } from "./components/client";
 import { ProductColumn } from "./components/columns";
+import SellerNav from "@/components/sellerNav";
 
 const SellerPage = async ({ params }: { params: { storeId: string } }) => {
   const products = await prismadb.product.findMany({
@@ -33,8 +34,10 @@ const SellerPage = async ({ params }: { params: { storeId: string } }) => {
 
   return (
     <>
-    {userId === process.env.ADMIN_ID && (
+    {userId === process.env.ADMIN_ID ? (
       <Navbar />
+    ):(
+      <SellerNav />
     )}
       <div className="flex-col">
         <div className="flex-1 space-y-4 p-8 pt-6">

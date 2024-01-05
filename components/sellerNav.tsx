@@ -7,44 +7,49 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import prismadb from "@/lib/prismadb";
 
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-  SheetClose,
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+    SheetClose,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
 const SellerNav = async () => {
-  const { userId } = auth();
+    const { userId } = auth();
 
-  if (!userId) {
-    redirect("/sign-in");
-  }
+    if (!userId) {
+        redirect("/sign-in");
+    }
 
-  const stores = await prismadb.store.findMany({
-    where: {
-      userId: process.env.ADMIN_ID,
-    },
-  });
+    const stores = await prismadb.store.findMany({
+        where: {
+            userId: process.env.ADMIN_ID,
+            sellers: {
+                some: {
+                    id: userId,
+                },
+            }
+        },
+    });
 
-  return (
-    <>
-      <div className="border-b w-full">
-        <div className="flex">
-          <div className="flex h-16 items-center px-4 justify-between w-full">
-            <StoreSwitcher items={stores} isAdmin={false}/>
-            <div className="ml-auto flex items-center space-x-4">
-              <ThemeToggle />
-              <UserButton afterSignOutUrl="/" />
+    return (
+        <>
+            <div className="border-b w-full">
+                <div className="flex">
+                    <div className="flex h-16 items-center px-4 justify-between w-full">
+                        <StoreSwitcher items={stores} isAdmin={false} />
+                        <div className="ml-auto flex items-center space-x-4">
+                            <ThemeToggle />
+                            <UserButton afterSignOutUrl="/" />
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default SellerNav;

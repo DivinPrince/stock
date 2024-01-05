@@ -16,6 +16,7 @@ import {
     SheetClose,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { Store } from "@prisma/client";
 
 const SellerNav = async () => {
     const { userId } = auth();
@@ -24,16 +25,15 @@ const SellerNav = async () => {
         redirect("/sign-in");
     }
 
-    const stores = await prismadb.store.findMany({
-        where: {
-            userId: process.env.ADMIN_ID,
-            sellers: {
-                some: {
-                    userId: userId,
-                },
-            }
+    let sellers = await prismadb.seller.findMany({
+        where:{
+            userId
         },
-    });
+        include:{
+            store: true
+        }
+    })
+    const stores = sellers.map(s=>s.store)
 
     return (
         <>

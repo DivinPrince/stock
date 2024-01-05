@@ -29,7 +29,7 @@ const SellerNav = async () => {
             userId: process.env.ADMIN_ID,
             sellers: {
                 some: {
-                    id: userId,
+                    userId: userId,
                 },
             }
         },

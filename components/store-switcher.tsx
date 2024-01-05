@@ -26,9 +26,10 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
 interface StoreSwitcherProps extends PopoverTriggerProps {
   items: Record<string, any>[];
+  isAdmin: boolean;
 }
 
-export default function StoreSwitcher({ className, items = [] }: StoreSwitcherProps) {
+export default function StoreSwitcher({ className, items = [], isAdmin = true }: StoreSwitcherProps) {
   const storeModal = useStoreModal();
   const params = useParams();
   const router = useRouter();
@@ -90,19 +91,22 @@ export default function StoreSwitcher({ className, items = [] }: StoreSwitcherPr
             </CommandGroup>
           </CommandList>
           <CommandSeparator />
-          <CommandList>
-            <CommandGroup>
-              <CommandItem
-                onSelect={() => {
-                  setOpen(false)
-                  storeModal.onOpen()
-                }}
-              >
-                <PlusCircle className="mr-2 h-5 w-5" />
-                Create Store
-              </CommandItem>
-            </CommandGroup>
-          </CommandList>
+          {isAdmin && (
+            <CommandList>
+              <CommandGroup>
+                <CommandItem
+                  onSelect={() => {
+                    setOpen(false)
+                    storeModal.onOpen()
+                  }}
+                >
+                  <PlusCircle className="mr-2 h-5 w-5" />
+                  Create Store
+                </CommandItem>
+              </CommandGroup>
+            </CommandList>
+          )
+          }
         </Command>
       </PopoverContent>
     </Popover>

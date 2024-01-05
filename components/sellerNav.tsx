@@ -35,7 +35,7 @@ const SellerNav = async () => {
       <div className="border-b w-full">
         <div className="flex">
           <div className="flex h-16 items-center px-4 justify-between w-full">
-            <StoreSwitcher items={stores} />
+            <StoreSwitcher items={stores} isAdmin={false}/>
             <div className="ml-auto flex items-center space-x-4">
               <ThemeToggle />
               <UserButton afterSignOutUrl="/" />

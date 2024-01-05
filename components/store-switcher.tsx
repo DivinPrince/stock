@@ -26,7 +26,7 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
 interface StoreSwitcherProps extends PopoverTriggerProps {
   items: Record<string, any>[];
-  isAdmin: boolean;
+  isAdmin?: boolean;
 }
 
 export default function StoreSwitcher({ className, items = [], isAdmin = true }: StoreSwitcherProps) {

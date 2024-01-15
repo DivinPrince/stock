@@ -151,7 +151,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                 <CardHeader></CardHeader>
                 <CardContent className="pl-2">
                   <Table className="w-full">
-                    <TableCaption>{format(new Date(order.createdAt), "'Products Sold on' MM/dd/yyyy") }</TableCaption>
+                    <TableCaption>{format(new Date(order.createdAt), "'Products Sold on' MM/dd/yyyy")}{order.createdAt.toDateString() === new Date().toDateString() && (" (current)")}</TableCaption>
                     <TableHeader>
                       <TableRow className="flex justify-between">
                         <TableHead className="text-right">Time</TableHead>

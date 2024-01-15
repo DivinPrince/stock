@@ -22,7 +22,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { getTodayRevenue } from "@/actions/get-today-revenue";
 import Link from "next/link";
 import { DataTable } from "@/components/ui/data-table";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 import { Sell, SellItem } from "@prisma/client";
 
 interface DashboardPageProps {
@@ -38,19 +38,27 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
     (total, dataPoint) => total + dataPoint.total,
     0
   );
+  const today = new Date();
+  const sevenDaysAgo = new Date(today);
+  sevenDaysAgo.setDate(today.getDate() - 7); // You can adjust the number of days as needed
+
   const paidOrders = await prismadb.sell.findMany({
     where: {
       storeId: params.storeId,
+      createdAt: {
+        gte: sevenDaysAgo,
+        lt: today,
+      },
     },
     include: {
       sellItems: true,
     },
   });
   let TS: SellItem[] = [];
-  let d:Sell[] = []
+  let d: Sell[] = [];
   for (const order of paidOrders) {
     if (order.createdAt.toDateString() === new Date().toDateString()) {
-      d.push(order)
+      d.push(order);
       for (const items of order.sellItems) {
         TS.push(items);
       }
@@ -137,38 +145,46 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
             </div>
           </ScrollArea>
         </div>
-        <Card className="col-span-4">
-          <CardHeader></CardHeader>
-          <CardContent className="pl-2">
-            <Table className="w-full">
-              <TableCaption>Products Sold Today.</TableCaption>
-              <TableHeader>
-                <TableRow className="flex justify-between">
-                  <TableHead className="text-right">Time</TableHead>
-                  <TableHead>ProductName</TableHead>
-                  <TableHead className="text-right">Quantity</TableHead>
-                  <TableHead className="text-right">SoldAt</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {TS.map((g) => (
-                  <TableRow key={g.name} className="flex justify-between">
-                    <TableCell>{format(new Date(g.createdAt), 'h:mm a')}</TableCell>
-                    <TableCell className="font-medium">{g.name}</TableCell>
-                    <TableCell>{g.Qty}</TableCell>
-                    <TableCell>{formatter(g.price)}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-              <div className="w-full flex justify-between">
-                <TableCell className="font-medium">Total</TableCell>
-                <TableCell>
-                  {formatter(Number(todayRevenue.todayRevenue))}
-                </TableCell>
-              </div>
-            </Table>
-          </CardContent>
-        </Card>
+        {paidOrders.map((order) => (
+          <>
+              <Card className="col-span-4">
+                <CardHeader></CardHeader>
+                <CardContent className="pl-2">
+                  <Table className="w-full">
+                    <TableCaption>{format(new Date(order.createdAt), "'Products Sold on' eeee") }</TableCaption>
+                    <TableHeader>
+                      <TableRow className="flex justify-between">
+                        <TableHead className="text-right">Time</TableHead>
+                        <TableHead>ProductName</TableHead>
+                        <TableHead className="text-right">Quantity</TableHead>
+                        <TableHead className="text-right">SoldAt</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {order.sellItems.map((g) => (
+                        <TableRow key={g.name} className="flex justify-between">
+                          <TableCell>
+                            {format(new Date(g.createdAt), "h:mm a")}
+                          </TableCell>
+                          <TableCell className="font-medium">
+                            {g.name}
+                          </TableCell>
+                          <TableCell>{g.Qty}</TableCell>
+                          <TableCell>{formatter(g.price)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                    <div className="w-full flex justify-between">
+                      <TableCell className="font-medium">Total</TableCell>
+                      <TableCell>
+                        {formatter(Number(todayRevenue.todayRevenue))}
+                      </TableCell>
+                    </div>
+                  </Table>
+                </CardContent>
+              </Card>;
+          </>
+        ))}
       </div>
     </div>
   );

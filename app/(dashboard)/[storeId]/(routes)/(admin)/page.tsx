@@ -55,23 +55,12 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
       sellItems: true,
     },
   });
-  let TS: SellItem[] = [];
-  let d: Sell[] = [];
-  for (const order of paidOrders) {
-    if (order.createdAt.toDateString() === new Date().toDateString()) {
-      d.push(order);
-      for (const items of order.sellItems) {
-        TS.push(items);
-      }
-    }
-  }
   const groupedOrders: Record<string, any> = {};
   paidOrders.forEach((order) => {
     const dateKey = format(new Date(order.createdAt), "MM/dd/yyyy");
     if (!groupedOrders[dateKey]) {
       groupedOrders[dateKey] = [];
     }
-    order.sellItems
     groupedOrders[dateKey].push(order.sellItems);
   });
   const todayRevenue = await getTodayRevenue(params.storeId);

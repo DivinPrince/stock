@@ -24,6 +24,7 @@ import Link from "next/link";
 import { DataTable } from "@/components/ui/data-table";
 import { format } from "date-fns";
 import { Sell, SellItem } from "@prisma/client";
+import { Key, ReactElement, JSXElementConstructor, ReactNode, PromiseLikeOfReactNode, ReactPortal } from "react";
 
 interface DashboardPageProps {
   params: {
@@ -64,6 +65,15 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
       }
     }
   }
+  const groupedOrders: Record<string, any> = {};
+  paidOrders.forEach((order) => {
+    const dateKey = format(new Date(order.createdAt), "MM/dd/yyyy");
+    if (!groupedOrders[dateKey]) {
+      groupedOrders[dateKey] = [];
+    }
+    order.sellItems
+    groupedOrders[dateKey].push(order.sellItems);
+  });
   const todayRevenue = await getTodayRevenue(params.storeId);
   const products = await prismadb.product.findMany({
     where: {
@@ -145,13 +155,13 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
             </div>
           </ScrollArea>
         </div>
-        {paidOrders.map((order) => (
+        {Object.entries(groupedOrders).map(([date, orders]) => (
           <>
               <Card className="col-span-4">
                 <CardHeader></CardHeader>
                 <CardContent className="pl-2">
                   <Table className="w-full">
-                    <TableCaption>{format(new Date(order.createdAt), "'Products Sold on' MM/dd/yyyy")}{order.createdAt.toDateString() === new Date().toDateString() && (" (current)")}</TableCaption>
+                    <TableCaption>Product Sold on {date}</TableCaption>
                     <TableHeader>
                       <TableRow className="flex justify-between">
                         <TableHead className="text-right">Time</TableHead>
@@ -161,8 +171,8 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {order.sellItems.map((g) => (
-                        <TableRow key={g.name} className="flex justify-between">
+                      {orders.map((g: SellItem) => (
+                        <TableRow key={g.id} className="flex justify-between">
                           <TableCell>
                             {format(new Date(g.createdAt), "h:mm a")}
                           </TableCell>

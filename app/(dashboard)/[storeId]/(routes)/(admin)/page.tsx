@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Overview } from "@/components/overview";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardCon tent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import { getStockCount } from "@/actions/get-stock-count";
 import { formatter } from "@/lib/utils";
@@ -50,7 +50,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
   const sevenDaysAgo = new Date(today);
   sevenDaysAgo.setDate(today.getDate() - 7); // You can adjust the number of days as needed
 
-  const paidOrders = await prismadb.sell.findMany({
+  const sells = await prismadb.sell.findMany({
     where: {
       storeId: params.storeId,
       createdAt: {
@@ -62,25 +62,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
       sellItems: true,
     },
   });
-  let TS: SellItem[] = [];
-  let d: Sell[] = [];
-  for (const order of paidOrders) {
-    if (order.createdAt.toDateString() === new Date().toDateString()) {
-      d.push(order);
-      for (const items of order.sellItems) {
-        TS.push(items);
-      }
-    }
-  }
-  const groupedOrders: { [key: string]: any } = {};
-  paidOrders.forEach((order) => {
-    const dateKey = format(new Date(order.createdAt), "MM/dd/yyyy");
-    if (!groupedOrders[dateKey]) {
-      groupedOrders[dateKey] = [];
-    }
 
-    groupedOrders[dateKey].push(order.sellItems);
-  });
   const todayRevenue = await getTodayRevenue(params.storeId);
   const products = await prismadb.product.findMany({
     where: {
@@ -162,13 +144,13 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
             </div>
           </ScrollArea>
         </div>
-        {Object.entries(groupedOrders).map(([date, orders]) => (
+        {sells.map((sell) => (
           <>
             <Card className="col-span-4">
               <CardHeader></CardHeader>
               <CardContent className="pl-2">
                 <Table className="w-full">
-                  <TableCaption>Product Sold on {date}</TableCaption>
+                  <TableCaption>Product Sold on {format(new Date(sell.createdAt), "MM/dd/yyyy")}</TableCaption>
                   <TableHeader>
                     <TableRow className="flex justify-between">
                       <TableHead className="text-right">Time</TableHead>
@@ -178,7 +160,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {orders.map((g: SellItem) => (
+                    {sell.sellItems.map((g: SellItem) => (
                       <TableRow key={g.id} className="flex justify-between">
                         <TableCell>
                           {format(new Date(g.createdAt), "h:mm a")}

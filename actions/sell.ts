@@ -6,7 +6,7 @@ interface SellForm {
   price: number;
 }
 
-export async function myAction(storeId: number, id: number, name: string, form: SellForm): Promise<string> {
+export async function myAction(storeId: any, id: any, name: any, form: SellForm): Promise<string> {
   try {
     const existingProduct: Product | null = await prismadb.product.findUnique({
       where: { id },

@@ -1,3 +1,4 @@
+"use server"
 import prismadb from "@/lib/prismadb";
 import { Product,Sell } from "@prisma/client";
 
@@ -51,7 +52,16 @@ export async function myAction(storeId: any, id: any, name: any, form: SellForm)
     if (todaySell) {
       await prismadb.sell.update({
         where: { id: todaySell.id },
-        data: sellData,
+        data: {
+          sellItems: {
+            create: {
+              Qty: form.qty,
+              name,
+              price: selling,
+              profit,
+            },
+          },
+        },
       });
     } else {
       await prismadb.sell.create({

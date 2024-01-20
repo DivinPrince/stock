@@ -32,7 +32,7 @@ const Navbar = async () => {
 
   return (
     <>
-      <div className="border-b w-full">
+      <div className="border-b w-full sticky top-0">
         <div className="hidden md:flex">
           <div className="flex h-16 items-center px-4 justify-between w-full">
             <StoreSwitcher items={stores} />

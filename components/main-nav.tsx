@@ -16,7 +16,7 @@ export const MainNav: FC<MainNavProps> = ({ className, closer }) => {
   const routes = useRoutes();
   const Closer = closer;
   return (
-    <nav className={cn("flex items-center space-x-4 lg:space-x-6 sticky top-0", className)}>
+    <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
       {routes.map((route) => (
         <>
           {Closer ? (

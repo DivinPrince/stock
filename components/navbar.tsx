@@ -32,9 +32,9 @@ const Navbar = async () => {
 
   return (
     <>
-      <div className="border-b w-full sticky top-0 backdrop-blur-lg">
+      <div className="border-b w-full sticky top-0 bg-white">
         <div className="hidden md:flex">
-          <div className="flex h-16 items-center px-4 justify-between w-full">
+          <div className="flex h-16 items-cente/r px-4 justify-between w-full">
             <StoreSwitcher items={stores} />
             <MainNav className="mx-8" />
             <div className="ml-auto flex items-center space-x-4">

@@ -52,10 +52,9 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
   const sells = await prismadb.sell.findMany({
     where: {
       storeId: params.storeId,
-      createdAt: {
-        gte: sevenDaysAgo,
-        lt: today,
-      },
+    },
+    orderBy:{
+      createdAt: "desc"
     },
     include: {
       sellItems: true,

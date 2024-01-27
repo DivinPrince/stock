@@ -1,4 +1,4 @@
-import { CreditCard, DollarSign, Package } from "lucide-react";
+import { Package } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
 import {
@@ -6,7 +6,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -20,17 +19,8 @@ import prismadb from "@/lib/prismadb";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getTodayRevenue } from "@/actions/get-today-revenue";
 import Link from "next/link";
-import { DataTable } from "@/components/ui/data-table";
 import { format } from "date-fns";
-import { Sell, SellItem } from "@prisma/client";
-import {
-  Key,
-  ReactElement,
-  JSXElementConstructor,
-  ReactNode,
-  PromiseLikeOfReactNode,
-  ReactPortal,
-} from "react";
+import { SellItem } from "@prisma/client";
 
 interface DashboardPageProps {
   params: {
@@ -70,7 +60,20 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
       createdAt: "desc",
     },
   });
-
+  const getTotal = (id: string)=>{
+    let revenue = 0;
+    if (sells) {
+      let sel = sells.find((d)=> d.id === id)
+      let revenueForOrder = 0;
+        
+        for (const item of sel?.sellItems!) {
+          revenueForOrder += item.price;
+        }
+        // Adding the revenue for this order to the respective month
+        revenue += revenueForOrder;  
+    }
+    return revenue
+  }
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
@@ -172,7 +175,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                   <div className="w-full flex justify-between">
                     <TableCell className="font-medium">Total</TableCell>
                     <TableCell>
-                      {formatter(Number(todayRevenue.todayRevenue))}
+                    {formatter(Number(getTotal(sell.id)))}
                     </TableCell>
                   </div>
                 </Table>

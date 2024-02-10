@@ -53,6 +53,10 @@ model SellItem {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   sellId    String   @db.ObjectId
   name      String
+  descriptio String
+  sellerName String
+  customerName String
+  customerNumber String
   Qty       Int
   sell      Sell     @relation(fields: [sellId], references: [id])
   price     Int

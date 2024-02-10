@@ -43,7 +43,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
     where: {
       storeId: params.storeId,
     },
-    orderBy:{
+    orderBy: {
       createdAt: "desc"
     },
     include: {
@@ -60,17 +60,17 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
       createdAt: "desc",
     },
   });
-  const getTotal = (id: string)=>{
+  const getTotal = (id: string) => {
     let revenue = 0;
     if (sells) {
-      let sel = sells.find((d)=> d.id === id)
+      let sel = sells.find((d) => d.id === id)
       let revenueForOrder = 0;
-        
-        for (const item of sel?.sellItems!) {
-          revenueForOrder += item.price;
-        }
-        // Adding the revenue for this order to the respective month
-        revenue += revenueForOrder;  
+
+      for (const item of sel?.sellItems!) {
+        revenueForOrder += item.price;
+      }
+      // Adding the revenue for this order to the respective month
+      revenue += revenueForOrder;
     }
     return revenue
   }
@@ -117,65 +117,73 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
               </div>
             </CardContent>
           </Card>
-          <ScrollArea className="h-40 w-48 rounded-md border flex-1">
-            <div className="p-4">
-              <h4 className="mb-4 text-sm font-medium leading-none">
-                About to finish
-              </h4>
-              {products.map((product) => (
-                <>
-                  {product.stockQuantity - product.sold < 5 && (
-                    <Link href={`/${params.storeId}/products/${product.id}`}>
-                      <div key={product.id} className="text-sm cursor-pointer">
-                        {product.name}
-                        <p className="text-muted-foreground">
-                          reamining {product.stockQuantity - product.sold}
-                        </p>
-                      </div>
-                      <Separator className="my-2" />
-                    </Link>
-                  )}
-                </>
-              ))}
-              {!products.length ? (
-                <p className="text-muted-foreground">No Results</p>
-              ) : (
-                <></>
-              )}
-            </div>
-          </ScrollArea>
+          <Card>
+            <ScrollArea className="h-40 w-48 rounded-md border flex-1">
+              <div className="p-4">
+                <h4 className="mb-4 text-sm font-medium leading-none">
+                  About to finish
+                </h4>
+                {products.map((product) => (
+                  <>
+                    {product.stockQuantity - product.sold < 5 && (
+                      <Link href={`/${params.storeId}/products/${product.id}`}>
+                        <div key={product.id} className="text-sm cursor-pointer">
+                          {product.name}
+                          <p className="text-red-500">
+                            reamining {product.stockQuantity - product.sold}
+                          </p>
+                        </div>
+                        <Separator className="my-2" />
+                      </Link>
+                    )}
+                  </>
+                ))}
+                {!products.length ? (
+                  <p className="text-muted-foreground">No Results</p>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </ScrollArea>
+          </Card>
+
         </div>
         {sells.map((sell) => (
           <>
             <Card className="col-span-4">
-              <CardHeader></CardHeader>
               <CardContent className="pl-2">
                 <Table className="w-full">
                   <TableCaption>Product Sold on {format(new Date(sell.createdAt), "MM/dd/yyyy")}</TableCaption>
                   <TableHeader>
-                    <TableRow className="flex justify-between">
-                      <TableHead className="text-right">Time</TableHead>
+                    <TableRow>
+                      <TableHead>Time</TableHead>
                       <TableHead>ProductName</TableHead>
-                      <TableHead className="text-right">Quantity</TableHead>
-                      <TableHead className="text-right">SoldAt</TableHead>
+                      <TableHead>Description</TableHead>
+                      <TableHead>SellerName</TableHead>
+                      <TableHead>CustomerName</TableHead>
+                      <TableHead>CustomerNumber</TableHead>
+                      <TableHead>Quantity</TableHead>
+                      <TableHead>SoldAt</TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
                     {sell.sellItems.map((g: SellItem) => (
-                      <TableRow key={g.id} className="flex justify-between">
+                      <TableRow key={g.id}>
                         <TableCell>
                           {format(new Date(g.createdAt), "h:mm a")}
                         </TableCell>
-                        <TableCell className="font-medium">{g.name}</TableCell>
+                        <TableCell>{g.name}</TableCell>
+                        <TableCell>{g.descriptio}</TableCell>
+                        <TableCell>{g.sellerName}</TableCell>
+                        <TableCell>{g.customerName}</TableCell>
+                        <TableCell>{g.customerNumber}</TableCell>
                         <TableCell>{g.Qty}</TableCell>
                         <TableCell>{formatter(g.price)}</TableCell>
                       </TableRow>
                     ))}
-                  </TableBody>
-                  <div className="w-full flex justify-between">
+                  <div className="">
                     <TableCell className="font-medium">Total</TableCell>
                     <TableCell>
-                    {formatter(Number(getTotal(sell.id)))}
+                      {formatter(Number(getTotal(sell.id)))}
                     </TableCell>
                   </div>
                 </Table>

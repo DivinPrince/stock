@@ -5,16 +5,30 @@ import { Product,Sell } from "@prisma/client";
 interface SellForm {
   qty: number;
   price: number;
+  customer: string;
+  customerNumber: string;
 }
 
-export async function myAction(storeId: any, id: any, name: any, form: SellForm): Promise<string> {
+export async function myAction(storeId: any, id: any, name: any, sellerId: string, form: SellForm): Promise<string> {
   try {
     const existingProduct: Product | null = await prismadb.product.findUnique({
       where: { id },
     });
-
+    let dbseller = await prismadb.seller.findFirst({
+      where:{
+        userId: sellerId
+      }
+    })
     if (!existingProduct) {
       return "No product found";
+    }
+    if (!dbseller && sellerId != process.env.ADMIN_ID) {
+      return "Bad Request";
+      
+    }
+    let seller = dbseller?.name
+    if(sellerId === process.env.ADMIN_ID){
+      seller = 'Admin'
     }
 
     if (existingProduct.stockQuantity - existingProduct.sold < form.qty) {
@@ -45,6 +59,7 @@ export async function myAction(storeId: any, id: any, name: any, form: SellForm)
           name,
           price: selling,
           profit,
+          
         },
       },
     };
@@ -59,13 +74,29 @@ export async function myAction(storeId: any, id: any, name: any, form: SellForm)
               name,
               price: selling,
               profit,
+              customerName: form.customer,
+              customerNumber: form.customerNumber,
+              sellerName: seller as string,
+              descriptio: existingProduct.description
             },
           },
         },
       });
     } else {
       await prismadb.sell.create({
-        data: sellData,
+        data: {storeId,
+          sellItems: {
+            create: {
+              Qty: form.qty,
+              customerName: form.customer,
+              customerNumber: form.customerNumber,
+              sellerName: seller as string,
+              name,
+              price: selling,
+              profit,  
+              descriptio: existingProduct.description
+            },
+          },},
       });
     }
 

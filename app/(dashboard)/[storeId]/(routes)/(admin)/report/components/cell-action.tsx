@@ -79,10 +79,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   if (data.month == months[currentMonth]) {
     return (
       <>
+      <Link href={`/${params.storeId}/statements`}>
         <div ref={bottomRef} className="bg-green-100 text-green-500 flex gap-2 items-center w-fit p-1 px-2 rounded-full">
           <CircleDot size={15} />
           <span>current</span>
         </div>
+      </Link>
       </>
     );
   };

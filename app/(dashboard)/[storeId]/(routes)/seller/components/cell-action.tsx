@@ -33,6 +33,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { DropdownMenuItemProps } from "@radix-ui/react-dropdown-menu";
+import { useAuth } from "@clerk/nextjs";
 
 interface CellActionProps {
   data: ProductColumn;
@@ -40,16 +41,17 @@ interface CellActionProps {
 const formSchema = z.object({
   price: z.coerce.number().min(1),
   qty: z.coerce.number().min(1),
+  customer: z.string().min(1),
+  customerNumber: z.string().min(1),
 });
 type FormValues = z.infer<typeof formSchema>;
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const params = useParams();
+  const {userId} = useAuth()
 
   const g = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {}, []);
 
   const onConfirm = async () => {
     try {
@@ -78,7 +80,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onSell = async (form: FormValues) => {
     setLoading(true);
     let loader = toast.loading("selling");
-    let ans = await myAction(params.storeId, data.id,data.name,form);
+    let ans = await myAction(params.storeId, data.id,data.name,userId!,form,);
     if (ans == "success") {
       g?.current?.click();
       toast.success("Product sold.");
@@ -86,7 +88,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
       router.refresh();
     } else {
-      toast.success(`${ans}`);
+      toast.error(`${ans}`);
     }
     toast.dismiss(loader);
     setLoading(false);
@@ -108,6 +110,38 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
               onSubmit={sellForm.handleSubmit(onSell)}
               className="flex flex-col gap-2"
             >
+              <FormField
+                control={sellForm.control}
+                name="customer"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="Customer Name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={sellForm.control}
+                name="customerNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="Customer Phone Number"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={sellForm.control}
                 name="price"

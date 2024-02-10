@@ -17,17 +17,17 @@ export const useRoutes = ()=>{
       },
       {
         href: `/${params.storeId}/seller`,
-        label: 'Seller',
+        label: 'Sale',
         active: pathname === `/${params.storeId}/seller`,
       },
       {
         href: `/${params.storeId}/seller/add`,
-        label: 'Add Seller',
+        label: 'Add Taler',
         active: pathname === `/${params.storeId}/seller/add`,
       },
       {
         href: `/${params.storeId}/seller/all`,
-        label: 'sellers',
+        label: 'Taler',
         active: pathname === `/${params.storeId}/seller/all`,
       },
       {

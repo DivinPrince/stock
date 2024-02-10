@@ -28,8 +28,8 @@ export const MainNav: FC<MainNavProps> = ({ className, closer }) => {
                   "w-full",
                   route.active
                     ? buttonVariants({variant: 'secondary'})
-                    : buttonVariants({variant: 'default'}),
-                    buttonVariants({variant: 'default'})
+                    : buttonVariants({variant: 'ghost'}),
+                    buttonVariants({variant: 'ghost'})
                 )}
                 >
                 {route.label}

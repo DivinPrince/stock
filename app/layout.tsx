@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
+import { Analytics } from '@vercel/analytics/react';
 
 import { ModalProvider } from "@/providers/modal-provider";
 import { ToastProvider } from "@/providers/toast-provider";
@@ -33,6 +34,7 @@ export default async function RootLayout({
             <ToastProvider />
             <ModalProvider />
             {children}
+            <Analytics />
           </ThemeProvider>
         </body>
       </html>

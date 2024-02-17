@@ -59,11 +59,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       await axios.delete(`/api/${params.storeId}/products/${data.id}`);
       toast.success("Product deleted.");
 
-      router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
+      router.refresh();
     }
   };
 
@@ -86,12 +86,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       toast.success("Product sold.");
       sellForm.reset();
 
-      router.refresh();
     } else {
-      toast.error(`${ans}`);
+      toast.success(`${ans}`);
     }
     toast.dismiss(loader);
     setLoading(false);
+      router.refresh();
   };
 
   return (

@@ -1,15 +1,6 @@
 import { Package } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import { getStockCount } from "@/actions/get-stock-count";
@@ -19,8 +10,7 @@ import prismadb from "@/lib/prismadb";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getTodayRevenue } from "@/actions/get-today-revenue";
 import Link from "next/link";
-import { format } from "date-fns";
-import { SellItem } from "@prisma/client";
+import SellTable from "./_components/sell-table";
 
 interface DashboardPageProps {
   params: {
@@ -30,11 +20,6 @@ interface DashboardPageProps {
 
 const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
   const stockCount = await getStockCount(params.storeId);
-  const graphRevenue = await getGraphRevenue(params.storeId);
-  const totalRevenue = graphRevenue.reduce(
-    (total, dataPoint) => total + dataPoint.total,
-    0
-  );
   const today = new Date();
   const sevenDaysAgo = new Date(today);
   sevenDaysAgo.setDate(today.getDate() - 7); // You can adjust the number of days as needed
@@ -67,7 +52,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
       let revenueForOrder = 0;
 
       for (const item of sel?.sellItems!) {
-        revenueForOrder += item.price;
+        revenueForOrder += item.price * item.Qty;
       }
       // Adding the revenue for this order to the respective month
       revenue += revenueForOrder;
@@ -149,47 +134,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
 
         </div>
         {sells.map((sell) => (
-          <>
-            <Card className="col-span-4">
-              <CardContent className="pl-2">
-                <Table className="w-full">
-                  <TableCaption>Product Sold on {format(new Date(sell.createdAt), "MM/dd/yyyy")}</TableCaption>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Time</TableHead>
-                      <TableHead>ProductName</TableHead>
-                      <TableHead>Description</TableHead>
-                      <TableHead>SellerName</TableHead>
-                      <TableHead>CustomerName</TableHead>
-                      <TableHead>CustomerNumber</TableHead>
-                      <TableHead>Quantity</TableHead>
-                      <TableHead>SoldAt</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                    {sell.sellItems.map((g: SellItem) => (
-                      <TableRow key={g.id}>
-                        <TableCell>
-                          {format(new Date(g.createdAt), "h:mm a")}
-                        </TableCell>
-                        <TableCell>{g.name}</TableCell>
-                        <TableCell>{g.descriptio}</TableCell>
-                        <TableCell>{g.sellerName}</TableCell>
-                        <TableCell>{g.customerName}</TableCell>
-                        <TableCell>{g.customerNumber}</TableCell>
-                        <TableCell>{g.Qty}</TableCell>
-                        <TableCell>{formatter(g.price)}</TableCell>
-                      </TableRow>
-                    ))}
-                  <div className="">
-                    <TableCell className="font-medium">Total</TableCell>
-                    <TableCell>
-                      {formatter(Number(getTotal(sell.id)))}
-                    </TableCell>
-                  </div>
-                </Table>
-              </CardContent>
-            </Card>
-          </>
+            <SellTable sell={sell} total={getTotal(sell.id)} key={sell.id}/>
         ))}
       </div>
     </div>

@@ -23,7 +23,7 @@ model Store {
 
 model Product {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  storeId       String
+  storeId       String   @db.ObjectId
   store         Store    @relation("StoreToProduct", fields: [storeId], references: [id])
   name          String
   price         Int
@@ -39,7 +39,7 @@ model Product {
 
 model Sell {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  storeId   String
+  storeId   String     @db.ObjectId
   store     Store      @relation("StoreToSell", fields: [storeId], references: [id])
   sellItems SellItem[] // Relation to sellItem model
   createdAt DateTime   @default(now())
@@ -50,26 +50,26 @@ model Sell {
 
 // Intermediary for a many-to-many relationship
 model SellItem {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  sellId    String   @db.ObjectId
-  name      String
-  descriptio String
-  sellerName String
-  customerName String
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  sellId         String   @db.ObjectId
+  name           String
+  descriptio     String
+  sellerName     String
+  customerName   String
   customerNumber String
-  Qty       Int
-  sell      Sell     @relation(fields: [sellId], references: [id])
-  price     Int
-  profit    Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  Qty            Int
+  sell           Sell     @relation(fields: [sellId], references: [id])
+  price          Int
+  profit         Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   @@index([sellId])
 }
 
 model Expence {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  storeId     String
+  storeId     String   @db.ObjectId
   store       Store    @relation("ExpenceToStore", fields: [storeId], references: [id])
   description String
   name        String
@@ -84,7 +84,7 @@ model Seller {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String
   name      String
-  storeId   String
+  storeId   String   @db.ObjectId
   store     Store    @relation("StoreToSeller", fields: [storeId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
